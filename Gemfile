@@ -6,13 +6,21 @@ gem 'rails', '3.0.0'
 # Database
 gem 'mysql'
 
+# Authentication
+gem 'devise'
+
 # Deployment
 gem 'capistrano'
 
 # Development and testing
 group :development, :test do
+  gem 'capybara'
+  gem 'database_cleaner'
+  gem 'cucumber-rails'
+  gem 'cucumber'
   gem 'ruby-debug'
-  gem 'rspec', '2.0.0.rc'
-  gem 'rspec-rails', '2.0.0.rc'
-  gem 'webrat'
+  gem 'rspec'
+  gem 'rspec-rails'
+  gem 'spork'
+  gem 'launchy'
 end
