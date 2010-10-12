@@ -9,8 +9,17 @@ gem 'mysql'
 # Authentication
 gem 'devise'
 
+# Frontend
+gem 'haml'
+gem 'sass'
+
 # Deployment
 gem 'capistrano'
+
+group :development do
+  gem 'hpricot'
+  gem 'ruby_parser'
+end
 
 # Development and testing
 group :development, :test do
