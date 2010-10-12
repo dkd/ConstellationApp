@@ -15,8 +15,17 @@ Ext.onReady(function() {
         }
     }];
 
-		function toggleNewFilter() {
+		function addNewViewFilter() {
 
+		}
+
+		function addNewViewTab() {
+			viewTabs.add({
+			            title: 'New View',
+			            iconCls: 'tabs',
+			            html: 'Tab Body <br/><br/>',
+			            closable: true
+			        });
 		}
 
 		var ds = new Constellation.TopicStore();
@@ -65,7 +74,7 @@ Ext.onReady(function() {
 		        	        store: ds,
 		        	        cm: cm,
 		        	        sm: new Ext.grid.RowSelectionModel({
-		        	            singleSelect:true,
+		        	            singleSelect: true,
 		        	            listeners: {
 		        	                selectionchange: function(sel){
 		        	                    var rec = sel.getSelected();
@@ -94,9 +103,12 @@ Ext.onReady(function() {
 		        	                enableToggle:true,
 		        	                text:'Add Filter',
 		        	                tooltip: {title:'Add Filter', text:'Filter the given log entries.'},
-		        	                toggleHandler: toggleNewFilter
-		        	            },
-													'-'
+		        	                handler: addNewViewFilter
+		        	            }, '-', {
+		        	                text:'Add View',
+		        	                tooltip: {title:'Add View', text:'Add a new view.'},
+		        	                handler: addNewViewTab
+													}
 		        	        ],
 		        	        bbar: new Ext.PagingToolbar({
 		        	            pageSize: 25,
