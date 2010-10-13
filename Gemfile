@@ -23,13 +23,7 @@ end
 
 # Development and testing
 group :development, :test do
-  gem 'capybara'
-  gem 'database_cleaner'
-  gem 'cucumber-rails'
-  gem 'cucumber'
-  gem 'ruby-debug'
   gem 'rspec'
   gem 'rspec-rails'
-  gem 'spork'
-  gem 'launchy'
+  gem 'metric_fu'
 end
