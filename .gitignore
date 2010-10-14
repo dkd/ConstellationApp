@@ -1,4 +1,13 @@
+# General
 .bundle
-db/*.sqlite3
 log/*.log
+
+# Temporary data
 tmp
+
+# Tests
+db/*.sqlite3
+
+# Documentation
+.yardoc
+doc
