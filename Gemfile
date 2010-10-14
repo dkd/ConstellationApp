@@ -31,3 +31,7 @@ group :test, :development do
   gem 'cucumber-rails'
   gem 'database_cleaner'
 end
+
+group :test do
+  gem 'sqlite3-ruby', :require => 'sqlite3'
+end
