@@ -8,15 +8,11 @@ development:
   password:
   socket: /tmp/mysql.sock
 
-test:
-  adapter: mysql
-  encoding: utf8
-  reconnect: false
-  database: constellation_test
+test: &test
+  adapter: sqlite3
+  database: db/test.sqlite3
   pool: 5
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  timeout: 5000
 
 production:
   adapter: mysql
@@ -27,3 +23,5 @@ production:
   username: root
   password:
   socket: /tmp/mysql.sock
+cucumber:
+  <<: *test
