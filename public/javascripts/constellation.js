@@ -48,3 +48,26 @@ Constellation.Renderers = {
         return String.format('<span class="post-date">{0}</span><br/>by {1}', value.dateFormat('M j, Y, g:i a'), r.data['lastposter']);
     }
 };
+
+Constellation.ds = new Constellation.TopicStore();
+
+Constellation.cm = new Ext.grid.ColumnModel([{
+					id: 'timestamp',
+					header: 'Date',
+					dataIndex: 'timestamp',
+					width: 15
+				}, {
+           id: 'machine',
+           header: 'Machine',
+           dataIndex: 'machine',
+           width: 25
+        },{
+           header: 'Application',
+           dataIndex: 'application',
+           width: 25
+        },{
+           header: 'Message',
+           dataIndex: 'message'
+        }]);
+
+Constellation.cm.defaultSortable = true;

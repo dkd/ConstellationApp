@@ -28,29 +28,6 @@ Ext.onReady(function() {
 			        });
 		}
 
-		var ds = new Constellation.TopicStore();
-
-		var cm = new Ext.grid.ColumnModel([{
-							id: 'timestamp',
-							header: 'Date',
-							dataIndex: 'timestamp',
-							width: 15
-						}, {
-		           id: 'machine',
-		           header: 'Machine',
-		           dataIndex: 'machine',
-		           width: 25
-		        },{
-		           header: 'Application',
-		           dataIndex: 'application',
-		           width: 25
-		        },{
-		           header: 'Message',
-		           dataIndex: 'message'
-		        }]);
-
-    cm.defaultSortable = true;
-
 		var viewTabs = new Ext.TabPanel({
 		    id:' main-tabs',
 		    activeTab: 0,
@@ -68,11 +45,11 @@ Ext.onReady(function() {
 		        	title: 'All log entries',
 							closable: true,
 		        	items:[
-		        	    new Ext.grid.GridPanel({
+									new Ext.grid.GridPanel({
 		        	        region: 'center',
 		        	        id: 'topic-grid',
-		        	        store: ds,
-		        	        cm: cm,
+		        	        store: Constellation.ds,
+		        	        cm: Constellation.cm,
 		        	        sm: new Ext.grid.RowSelectionModel({
 		        	            singleSelect: true,
 		        	            listeners: {
@@ -112,7 +89,7 @@ Ext.onReady(function() {
 		        	        ],
 		        	        bbar: new Ext.PagingToolbar({
 		        	            pageSize: 25,
-		        	            store: ds,
+		        	            store: Constellation.ds,
 		        	            displayInfo: true,
 		        	            displayMsg: 'Displaying log entries {0} - {1} of {2}',
 		        	            emptyMsg: "No log entries to display"
@@ -123,6 +100,7 @@ Ext.onReady(function() {
 		        	        height:250,
 		        	        title:'View details',
 		        	        split:true,
+											hidden:true,
 		        	        bodyStyle: 'padding: 10px; font-family: Arial; font-size: 12px;'
 		        	    }
 		        	 ]
