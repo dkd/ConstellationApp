@@ -22,8 +22,12 @@ group :development do
 end
 
 # Development and testing
-group :development, :test do
-  gem 'rspec'
-  gem 'rspec-rails'
+group :test, :development do
+  gem 'rspec', '2.0.0'
+  gem 'rspec-rails', '2.0.0'
   gem 'metric_fu'
+  gem 'nokogiri'
+  gem 'capybara'
+  gem 'cucumber-rails'
+  gem 'database_cleaner'
 end
