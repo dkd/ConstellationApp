@@ -6,6 +6,11 @@ gem 'rails', '3.0.0'
 # Database
 gem 'mysql'
 
+# Constellation
+gem 'cassandra', :require => 'cassandra/0.7'
+gem 'uuid'
+gem 'constellation'
+
 # Authentication
 gem 'devise'
 
