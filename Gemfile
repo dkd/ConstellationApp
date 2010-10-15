@@ -1,7 +1,7 @@
 source 'http://rubygems.org'
 
 # Rails
-gem 'rails', '3.0.0'
+gem 'rails', '3.0.1'
 
 # Database
 gem 'mysql'
@@ -39,6 +39,7 @@ group :test, :development do
   gem 'ruby-debug' if RUBY_VERSION.include? "1.8"
 end
 
+# Testing
 group :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'
 end
