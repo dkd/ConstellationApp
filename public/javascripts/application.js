@@ -54,7 +54,7 @@ Ext.onReady(function() {
 		        	            			singleSelect: true,
 		        	            			listeners: {
 		        	                		selectionchange: function(sel){
-																		alert('changed!');
+																		Ext.getCmp('details').setHidden(false);
 		        	                    	var rec = sel.getSelected();
 		        	                    	if(rec){
 		        	                        Ext.getCmp('details').body.update('<b><u>' + rec.get('title') + '</u></b><br /><br />Post details here.');

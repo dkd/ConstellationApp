@@ -10,10 +10,20 @@ Constellation.ds = new Ext.data.JsonStore({
     fields: 			['machine', 'application', 'timestamp', 'message']
 });
 
+Constellation.Renderers = {
+    createDateFromTimestamp : function(value, p, record) {
+				var date = new Date();
+				date.setTime(value * 1000);
+				return date.toLocaleString();
+    }
+};
+
+
 Constellation.cm = new Ext.grid.ColumnModel([{
 					id: 'timestamp',
 					header: 'Date',
 					dataIndex: 'timestamp',
+					renderer: Constellation.Renderers.createDateFromTimestamp,
 					width: 15
 				}, {
            id: 'machine',
