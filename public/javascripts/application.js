@@ -15,19 +15,6 @@ Ext.onReady(function() {
         }
     }];
 
-		function addNewViewFilter() {
-
-		}
-
-		function addNewViewTab() {
-			viewTabs.add({
-			            title: 		'New View',
-			            iconCls: 	'tabs',
-			            html: 		'Tab Body <br/><br/>',
-			            closable: true
-			        });
-		}
-
 		var viewTabs = new Ext.TabPanel({
 		    id: 						'main-tabs',
 		    activeTab: 			0,
@@ -35,9 +22,10 @@ Ext.onReady(function() {
 		    margins: 				'0 5 5 0',
 		    resizeTabs: 		true,
 		    tabWidth: 			150,
-				enableTabScroll:true,
+				enableTabScroll:false,
 				defaults: 			{ autoScroll:true },
 				plugins: 				new Ext.ux.TabCloseMenu(),
+
 		    items: [
 						{
 		        	id: 			'main-view',
@@ -45,7 +33,8 @@ Ext.onReady(function() {
 		        	title: 		'All log entries',
 							closable: true,
 		        	items:[
-									new Ext.grid.GridPanel({
+									{
+											xtype: 	'grid',
 		        	        region: 'center',
 		        	        id: 		'topic-grid',
 		        	        store: 	Constellation.ds,
@@ -53,13 +42,7 @@ Ext.onReady(function() {
 		        	        sm: 		new Ext.grid.RowSelectionModel({
 		        	            			singleSelect: true,
 		        	            			listeners: {
-		        	                		selectionchange: function(sel){
-																		Ext.getCmp('details').setHidden(false);
-		        	                    	var rec = sel.getSelected();
-		        	                    	if(rec){
-		        	                        Ext.getCmp('details').body.update('<b><u>' + rec.get('title') + '</u></b><br /><br />Post details here.');
-		        	                    	}
-		        	                		}
+		        	                		selectionchange: Constellation.selectLogEntry
 		        	            			}
 		        	        				}),
 		        	        trackMouseOver: 	false,
@@ -67,25 +50,18 @@ Ext.onReady(function() {
 		        	        viewConfig: {
 		        	            forceFit: 		true,
 		        	            enableRowBody:false,
-		        	            showDetails: 	true,
-		        	            getRowClass: 	function(record, rowIndex, p, ds){
-		        	                if(this.showDetails){
-		        	                    p.body = '<p>'+record.data.excerpt+'</p>';
-		        	                    return 'x-grid3-row-expanded';
-		        	                }
-		        	                return 'x-grid3-row-collapsed';
-		        	            }
+		        	            showDetails: 	true
 		        	        },
 		        	        tbar:[
 		        	            {
 		        	                enableToggle: true,
 		        	                text: 				'Add Filter',
 		        	                tooltip: 			{ title: 'Add Filter', text: 'Filter the given log entries.' },
-		        	                handler: 			addNewViewFilter
+		        	                handler: 			Constellation.addNewViewFilter
 		        	            }, '-', {
 		        	                text: 				'Add View',
 		        	                tooltip: 			{ title: 'Add View', text: 'Add a new view.' },
-		        	                handler: 			addNewViewTab
+		        	                handler: 			Constellation.addNewViewTab
 													}
 		        	        ],
 		        	        bbar: new Ext.PagingToolbar({
@@ -95,14 +71,13 @@ Ext.onReady(function() {
 		        	            displayMsg: 	'Displaying log entries {0} - {1} of {2}',
 		        	            emptyMsg: 		"No log entries to display"
 		        	        })
-		        	    }), {
+		        	    }, {
 		        	        id: 			'details',
-		        	        region: 	'south',
+											xtype: 		'panel',
+											region: 	'south',
+											hidden: 	true,
 		        	        height: 	250,
 		        	        title: 		'View details',
-		        	        split: 		true,
-											hidden: 	true,
-		        	        bodyStyle:'padding: 10px; font-family: Arial; font-size: 12px;'
 		        	    }
 		        	 ]
 		     		}, {
