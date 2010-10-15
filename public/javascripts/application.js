@@ -21,53 +21,54 @@ Ext.onReady(function() {
 
 		function addNewViewTab() {
 			viewTabs.add({
-			            title: 'New View',
-			            iconCls: 'tabs',
-			            html: 'Tab Body <br/><br/>',
+			            title: 		'New View',
+			            iconCls: 	'tabs',
+			            html: 		'Tab Body <br/><br/>',
 			            closable: true
 			        });
 		}
 
 		var viewTabs = new Ext.TabPanel({
-		    id:' main-tabs',
-		    activeTab: 0,
-		    region: 'center',
-		    margins: '0 5 5 0',
-		    resizeTabs: true,
-		    tabWidth: 150,
-				enableTabScroll: true,
-				defaults: {autoScroll:true},
-				plugins: new Ext.ux.TabCloseMenu(),
+		    id: 						'main-tabs',
+		    activeTab: 			0,
+		    region: 				'center',
+		    margins: 				'0 5 5 0',
+		    resizeTabs: 		true,
+		    tabWidth: 			150,
+				enableTabScroll:true,
+				defaults: 			{ autoScroll:true },
+				plugins: 				new Ext.ux.TabCloseMenu(),
 		    items: [
 						{
-		        	id: 'main-view',
-		        	layout: 'border',
-		        	title: 'All log entries',
+		        	id: 			'main-view',
+		        	layout: 	'border',
+		        	title: 		'All log entries',
 							closable: true,
 		        	items:[
 									new Ext.grid.GridPanel({
 		        	        region: 'center',
-		        	        id: 'topic-grid',
-		        	        store: Constellation.ds,
-		        	        cm: Constellation.cm,
-		        	        sm: new Ext.grid.RowSelectionModel({
-		        	            singleSelect: true,
-		        	            listeners: {
-		        	                selectionchange: function(sel){
-		        	                    var rec = sel.getSelected();
-		        	                    if(rec){
+		        	        id: 		'topic-grid',
+		        	        store: 	Constellation.ds,
+		        	        cm: 		Constellation.cm,
+		        	        sm: 		new Ext.grid.RowSelectionModel({
+		        	            			singleSelect: true,
+		        	            			listeners: {
+		        	                		selectionchange: function(sel){
+																		alert('changed!');
+		        	                    	var rec = sel.getSelected();
+		        	                    	if(rec){
 		        	                        Ext.getCmp('details').body.update('<b><u>' + rec.get('title') + '</u></b><br /><br />Post details here.');
-		        	                    }
-		        	                }
-		        	            }
-		        	        }),
-		        	        trackMouseOver:false,
-		        	        loadMask: {msg:'Loading Topics...'},
+		        	                    	}
+		        	                		}
+		        	            			}
+		        	        				}),
+		        	        trackMouseOver: 	false,
+		        	        loadMask: 				{ msg: 'Loading log entries...' },
 		        	        viewConfig: {
-		        	            forceFit:true,
-		        	            enableRowBody:true,
-		        	            showDetails:true,
-		        	            getRowClass : function(record, rowIndex, p, ds){
+		        	            forceFit: 		true,
+		        	            enableRowBody:false,
+		        	            showDetails: 	true,
+		        	            getRowClass: 	function(record, rowIndex, p, ds){
 		        	                if(this.showDetails){
 		        	                    p.body = '<p>'+record.data.excerpt+'</p>';
 		        	                    return 'x-grid3-row-expanded';
@@ -77,40 +78,40 @@ Ext.onReady(function() {
 		        	        },
 		        	        tbar:[
 		        	            {
-		        	                enableToggle:true,
-		        	                text:'Add Filter',
-		        	                tooltip: {title:'Add Filter', text:'Filter the given log entries.'},
-		        	                handler: addNewViewFilter
+		        	                enableToggle: true,
+		        	                text: 				'Add Filter',
+		        	                tooltip: 			{ title: 'Add Filter', text: 'Filter the given log entries.' },
+		        	                handler: 			addNewViewFilter
 		        	            }, '-', {
-		        	                text:'Add View',
-		        	                tooltip: {title:'Add View', text:'Add a new view.'},
-		        	                handler: addNewViewTab
+		        	                text: 				'Add View',
+		        	                tooltip: 			{ title: 'Add View', text: 'Add a new view.' },
+		        	                handler: 			addNewViewTab
 													}
 		        	        ],
 		        	        bbar: new Ext.PagingToolbar({
-		        	            pageSize: 25,
-		        	            store: Constellation.ds,
-		        	            displayInfo: true,
-		        	            displayMsg: 'Displaying log entries {0} - {1} of {2}',
-		        	            emptyMsg: "No log entries to display"
+		        	            pageSize: 		25,
+		        	            store: 				Constellation.ds,
+		        	            displayInfo: 	true,
+		        	            displayMsg: 	'Displaying log entries {0} - {1} of {2}',
+		        	            emptyMsg: 		"No log entries to display"
 		        	        })
 		        	    }), {
-		        	        id:'details',
-		        	        region:'south',
-		        	        height:250,
-		        	        title:'View details',
-		        	        split:true,
-											hidden:true,
-		        	        bodyStyle: 'padding: 10px; font-family: Arial; font-size: 12px;'
+		        	        id: 			'details',
+		        	        region: 	'south',
+		        	        height: 	250,
+		        	        title: 		'View details',
+		        	        split: 		true,
+											hidden: 	true,
+		        	        bodyStyle:'padding: 10px; font-family: Arial; font-size: 12px;'
 		        	    }
 		        	 ]
 		     		}, {
-							'title': 'Mail-Server',
-							'id': 'view2',
+							'title': 	'Mail-Server',
+							'id': 		'view2',
 							closable: true
 						}, {
-							'title': 'Rails 3-Applikation',
-							'id': 'view3',
+							'title': 	'Rails 3-Applikation',
+							'id': 		'view3',
 							closable: true
 						}
 				]
