@@ -1,5 +1,5 @@
-# Don't run this initializer for tests
-unless ENV["RAILS_ENV"]=="test"
+# Run this initializer only in development or production environment
+if %w(development production).include? ENV["RAILS_ENV"]
   raise Constellation::ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
   config = Constellation::Config.instance
 
