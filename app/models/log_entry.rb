@@ -54,7 +54,7 @@ class LogEntry < Constellation::LogEntry
       @@data_store.get_range(options).each { |h|
         attributes = {}
         h.columns.each { |c| attributes[c.column.name] = c.column.value }
-        results   << LogEntry.new(attributes)
+        results   << new(attributes)
       }
       results
     end
@@ -63,7 +63,7 @@ class LogEntry < Constellation::LogEntry
     # Returns the log entry defined by the given uuid
     #
     def get(uuid)
-      LogEntry.new(@@data_store.get(uuid))
+      new(@@data_store.get(uuid))
     end
 
   end
