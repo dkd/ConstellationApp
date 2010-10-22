@@ -12,11 +12,11 @@ describe LogEntry do
     end
   end
 
-  describe ".all" do
+  describe ".current_epoch" do
     it "should call the data store" do
       LogEntry.stub!(:new)
-      LogEntry.__send__("class_variable_get", "@@data_store").should_receive(:get_range).and_return([])
-      LogEntry.all
+      LogEntry.__send__("class_variable_get", "@@data_store").should_receive(:get).and_return([])
+      LogEntry.current_epoch
     end
   end
 

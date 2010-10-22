@@ -5,6 +5,6 @@ class LogEntriesController < ApplicationController
   # GET /log_entries.json
   #----------------------------------------------------------------------------
   def index
-    render :json => { "log_entries" => LogEntry.all(:count => 100) }.to_json
+    render :json => { "log_entries" => LogEntry.current_epoch(:count => 100, :reversed => true) }.to_json
   end
 end

@@ -4,7 +4,7 @@ describe LogEntriesController do
   include Devise::TestHelpers
 
   before(:each) do
-    LogEntry.stub!(:all)
+    LogEntry.stub!(:current_epoch)
     @user = Factory.create(:user)
     sign_in :user, @user
   end
@@ -13,7 +13,7 @@ describe LogEntriesController do
     it_should_be_protected :index
 
     it "should render all log entries" do
-      LogEntry.should_receive(:all)
+      LogEntry.should_receive(:current_epoch)
       get :index
     end
   end

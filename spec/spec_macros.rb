@@ -3,6 +3,15 @@ module RSpec::Core
     class ExampleGroup
       class << self
 
+        #
+        # This macro is available inside of each controller spec:
+        #
+        # describe UsersController do
+        #   describe "/users" do
+        #     it_should_be_protected :index
+        #   end
+        # end
+        #
         def it_should_be_protected(action)
           describe "Authentication" do
             before(:each) do

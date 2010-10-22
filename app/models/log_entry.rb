@@ -49,12 +49,14 @@ class LogEntry < Constellation::LogEntry
     # * consistency
     # * count
     #
-    def all(options = {})
-      results      = []
-      @@data_store.get_range(options).each { |h|
-        attributes = {}
-        h.columns.each { |c| attributes[c.column.name] = c.column.value }
-        results   << new(attributes)
+    def current_epoch(options = {})
+      results       = []
+      current_time  = Time.now
+      @@data_store.get("#{current_time.year}/#{current_time.month}/#{current_time.day}/#{current_time.hour}", options).each { |log_entry|
+        attributes          = log_entry[1]
+        attributes["uuid"]  = log_entry[0].to_guid
+
+        results << new(attributes)
       }
       results
     end
