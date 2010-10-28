@@ -8,9 +8,8 @@ describe ApplicationHelper do
         helper.stub!(:user_signed_in?).and_return(true)
       end
 
-      it "should cache seven javascript files as default file" do
-        helper.should_receive(:javascript_include_tag).with("ext/adapter/ext/ext-base", "ext/ext-all", "GroupTab", "GroupTabPanel",
-                                                            "TabCloseMenu", "constellation", "application", :cache => true)
+      it "should include javascript" do
+        helper.should_receive(:javascript_include_tag)
         helper.include_javascript
       end
     end
@@ -20,8 +19,8 @@ describe ApplicationHelper do
         helper.stub!(:user_signed_in?).and_return(false)
       end
 
-      it "should cache two javascript files as login.js" do
-        helper.should_receive(:javascript_include_tag).with("ext/adapter/ext/ext-base", "ext/ext-all", :cache => "login")
+      it "should not include javascript" do
+        helper.should_not_receive(:javascript_include_tag)
         helper.include_javascript
       end
     end
