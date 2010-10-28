@@ -1,4 +1,4 @@
-Ext.ns('Constellation.Ui');
+Ext.namespace('Constellation.Ui');
 
 Constellation.Ui.Grid = Ext.extend(Ext.grid.GridPanel, {
 

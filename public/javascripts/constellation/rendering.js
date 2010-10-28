@@ -1,4 +1,4 @@
-Ext.ns('Constellation.Rendering');
+Ext.namespace('Constellation.Rendering');
 
 Constellation.Rendering.renderDate = function(timestamp) {
 	var date = new Date();

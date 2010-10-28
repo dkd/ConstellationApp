@@ -1,4 +1,4 @@
-Ext.ns('Constellation.Views');
+Ext.namespace('Constellation.Views');
 
 Constellation.Views.store = new Ext.data.JsonStore({
 		autoLoad: 		true,

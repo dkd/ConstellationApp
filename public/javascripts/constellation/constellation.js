@@ -1,4 +1,4 @@
-Ext.ns('Constellation');
+Ext.namespace('Constellation');
 
 Constellation.addNewViewFilter = function () {
 }
