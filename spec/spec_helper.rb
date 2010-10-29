@@ -8,6 +8,8 @@ require 'rspec/rails'
 require "spec_macros"
 Dir[Rails.root.join("spec/support/**/*.rb")].each {|f| require f}
 
+Constellation::UserInterface.mute!
+
 RSpec.configure do |config|
   # == Mock Framework
   #
