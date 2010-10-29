@@ -7,8 +7,15 @@ describe LogEntry do
 
   describe "#save" do
     it "should insert itself into the data store" do
-      LogEntry.__send__("class_variable_get", "@@data_store").should_receive(:insert)
+      LogEntry.__send__("class_variable_get", "@@data_store").should_receive(:insert).with(@log_entry)
       @log_entry.save
+    end
+  end
+
+  describe "#delete" do
+    it "should delete the log file from the data store" do
+      LogEntry.__send__("class_variable_get", "@@data_store").should_receive(:delete).with(@log_entry)
+      @log_entry.delete
     end
   end
 

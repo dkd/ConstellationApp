@@ -30,6 +30,11 @@ class LogEntry < Constellation::LogEntry
     self
   end
 
+  # Deletes the log entry
+  def delete
+    @@data_store.delete(self)
+  end
+
   class << self
     #
     # Returns all log entries found in the Cassandra data store.
