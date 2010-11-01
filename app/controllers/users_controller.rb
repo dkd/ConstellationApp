@@ -1,2 +1,10 @@
 class UsersController < ApplicationController
+  before_filter :authenticate_user!
+  respond_to :json
+
+  # GET /users.json
+  #----------------------------------------------------------------------------
+  def index
+    respond_with(User.find(:all))
+  end
 end

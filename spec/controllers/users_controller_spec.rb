@@ -9,12 +9,13 @@ describe UsersController do
     sign_in :user, @user
   end
 
-  describe "GET /users/" do
-    it_should_be_protected :index
+  describe "GET /users.json" do
+    it_should_be_protected :index, :format => :json
 
     it "should render all users" do
+      controller.stub!(:authenticate_user!)
       User.should_receive(:find).with(:all)
-      get :index
+      get :index, :format => :json
     end
   end
 
