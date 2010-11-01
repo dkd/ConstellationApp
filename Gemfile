@@ -19,15 +19,14 @@ gem 'sass'
 # Deployment
 gem 'capistrano'
 
-group :development do
+# Development
+
+# Testing
+group :test do
   gem 'hpricot'
   gem 'ruby_parser'
-end
-
-# Development and testing
-group :test, :development do
-  gem 'rspec', '2.0.0'
   gem 'rspec-rails', '2.0.0'
+  gem 'rspec', '2.0.0'
   gem 'metric_fu'
   gem 'nokogiri'
   gem 'capybara'
