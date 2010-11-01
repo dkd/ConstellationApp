@@ -15,9 +15,10 @@ Ext.onReady(function() {
             		    tabTip: 	'Subscriptions tabtip',
             		    style: 		'padding: 10px;',
 										layout: 	'fit',
-    								items: 		[
-											Constellation.viewTabs
-										]
+    								items: 		[{
+												id: 'view-tabs',
+												xtype: 'Constellation.Tabs'
+										}]
     						}, {
 		    						title: 		'Events',
 		            	  layout: 	'fit',
@@ -45,7 +46,8 @@ Ext.onReady(function() {
         			        iconCls: 	'x-icon-templates',
         			        tabTip: 	'Templates tabtip',
         			        style: 		'padding: 10px;',
-        			        html: 		''
+        			        layout: 	'fit',
+											items: 		[{ xtype:'Constellation.Ui.Users'}]
         			 		}]
         			}]
 					}]

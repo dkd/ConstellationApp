@@ -1,5 +1,20 @@
 Ext.namespace('Constellation.Views');
 
+Constellation.Views.addNewViewFilter = function () {
+	var filterElement = Ext.getCmp('add-filter');
+	filterElement[filterElement.isVisible() ? "hide" : "show"]();
+	filterElement.ownerCt.doLayout();
+}
+
+Constellation.Views.addNewViewTab = function () {
+	Ext.getCmp('view-tabs').add({
+	            title: 		'New View',
+	            iconCls: 	'tabs',
+							xtype: 		'Constellation.Ui.Views',
+	            closable: true
+	        });
+}
+
 Constellation.Views.store = new Ext.data.JsonStore({
 		autoLoad: 		true,
     autoDestroy: 	true,
