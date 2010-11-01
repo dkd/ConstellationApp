@@ -4,6 +4,7 @@ Constellation::Application.routes.draw do
   # Resources
   resources :views
   resources :log_entries
+  resources :users
 
   # Point the home page to /views
   root :to => "views#index"
