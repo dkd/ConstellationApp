@@ -20,15 +20,18 @@ gem 'sass'
 gem 'capistrano'
 
 # Development
+group :development, :test do
+  gem 'haml-rails'
+  gem 'hpricot'
+  gem 'metric_fu'
+  gem 'nokogiri'
+end
 
 # Testing
 group :test do
-  gem 'hpricot'
   gem 'ruby_parser'
   gem 'rspec-rails', '2.0.0'
   gem 'rspec', '2.0.0'
-  gem 'metric_fu'
-  gem 'nokogiri'
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'database_cleaner'

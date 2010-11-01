@@ -107,6 +107,11 @@ GEM
       json (~> 1.4.6)
       term-ansicolor (~> 1.0.5)
     haml (3.0.22)
+    haml-rails (0.3.4)
+      actionpack (~> 3.0)
+      activesupport (~> 3.0)
+      haml (~> 3.0)
+      railties (~> 3.0)
     highline (1.6.1)
     hirb (0.3.4)
     hoe (2.6.2)
@@ -238,6 +243,7 @@ DEPENDENCIES
   devise
   factory_girl_rails
   haml
+  haml-rails
   hpricot
   metric_fu
   mysql
