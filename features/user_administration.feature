@@ -6,6 +6,7 @@ Feature: User administration
   @javascript
   Scenario: List users
     Given I am authenticated as an admin
-    And I am on the home page
-    When I click "Users"
-    Then I should see all users
+    And I have "3" users
+    When I go to the views page
+    And I click  the "Users" link
+    And I should see all users
