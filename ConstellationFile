@@ -8,3 +8,6 @@ reading_buffer = 1
 data_store.host     = "127.0.0.1"
 data_store.port     = 9160
 data_store.keyspace = :constellation
+
+# set up test environment
+data_store.keyspace = :constellation_test if Rails.env=="test"
