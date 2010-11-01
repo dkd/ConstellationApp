@@ -11,26 +11,30 @@ Constellation.Views.store = new Ext.data.JsonStore({
 });
 
 Constellation.Views.model = new Ext.grid.ColumnModel([{
-					id: 'timestamp',
-					header: 'Date',
-					dataIndex: 'timestamp',
-					renderer: Constellation.Rendering.Renderers.createDateFromTimestamp,
-					sortable: true,
-					width: 15
+					id: 				'timestamp',
+					header: 		'Date',
+					dataIndex: 	'timestamp',
+  				id: 				'timestamp',
+					renderer: 	Constellation.Rendering.Renderers.createDateFromTimestamp,
+					sortable: 	true,
+					width: 			15
 				}, {
-           id: 'machine',
-           header: 'Machine',
-           dataIndex: 'machine',
-					 sortable: true,
-           width: 25
+          id: 				'machine',
+          header: 		'Machine',
+          dataIndex: 	'machine',
+				  id: 				'machine',
+				  sortable: 	true,
+          width: 			25
         },{
-           header: 'Application',
-           dataIndex: 'application',
-					 sortable: true,
-           width: 25
+          header: 		'Application',
+          dataIndex: 	'application',
+					id: 				'application',
+					sortable: 	true,
+          width: 			25
         },{
-           header: 'Message',
-           dataIndex: 'message'
+          header: 		'Message',
+          dataIndex: 	'message',
+					id: 				'message'
         }]);
 
 Constellation.Views.model.defaultSortable = true;
@@ -50,7 +54,7 @@ Constellation.Views.renderDetailContent = function(record) {
 Constellation.Views.selectLogEntry = function(sel) {
 	var record = sel.getSelected();
  	if(record){
-     var detailElement = Ext.getCmp('details');
+    var detailElement = Ext.getCmp('details');
 		detailElement.body.update(Constellation.Views.renderDetailContent(record));
 		detailElement.show();
 		detailElement.ownerCt.doLayout();

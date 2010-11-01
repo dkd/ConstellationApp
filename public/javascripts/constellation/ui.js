@@ -5,6 +5,7 @@ Constellation.Ui.Grid = Ext.extend(Ext.grid.GridPanel, {
 	initComponent: function() {
 		var config = {
 				region: 'center',
+				cls: 		'constellation-view-grid',
 			  store: 	Constellation.Views.store,
 			  cm: 		Constellation.Views.model,
 			  sm: 		new Ext.grid.RowSelectionModel({
