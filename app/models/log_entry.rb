@@ -120,36 +120,37 @@ class LogEntry < Constellation::LogEntry
         column_family = :logs
       end
       if options[:equals]
-        @@data_store.get(column_family, key, options[:equals]).each { |log_entry|
-          uuid               = log_entry[1].keys.first.to_guid
-          attributes         = @@data_store.get(:logs, key, uuid)
-          attributes["uuid"] = uuid
-          results << new(attributes)
-        }
+        @@data_store.get(column_family, key, options[:equals]).each { |log_entry| results << parse_log_entry(log_entry) }
       elsif options[:includes]
         options[:includes].each { |value|
-          @@data_store.get(column_family, key, value).each { |log_entry|
-            uuid               = log_entry[1].keys.first.to_guid
-            attributes         = @@data_store.get(:logs, key, uuid)
-            attributes["uuid"] = uuid
-            results << new(attributes)
-          }
+          @@data_store.get(column_family, key, value).each { |log_entry| results << parse_log_entry(log_entry) }
         }
       elsif options[:start] && options[:end]
         @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each { |log_entry|
           uuid               = log_entry[1].keys.first.to_guid
-          attributes         = @@data_store.get(:logs, key, uuid)
+          attributes         = @@data_store.get(:logs, log_entry.first, uuid)
           attributes["uuid"] = uuid
-          results << new(attributes)
+          results            << new(attributes)
         }
       end
+      results
+    end
+
+    #
+    # Parses a log entry from an Ordered Hash
+    #
+    def parse_log_entry(log_entry, reversed=false)
+      uuid               = log_entry[0].to_guid
+      attributes         = @@data_store.get(:logs, log_entry[1], uuid)
+      attributes["uuid"] = uuid
+      new(attributes)
     end
 
     #
     # Returns the log entry defined by the given uuid
     #
     def get(uuid)
-      new(@@data_store.get(uuid))
+      new(@@data_store.get(:logs, uuid))
     end
   end
 end

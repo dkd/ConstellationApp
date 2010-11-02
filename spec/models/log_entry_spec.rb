@@ -89,6 +89,25 @@ describe LogEntry do
     end
   end
 
+  describe ".parse_log_entry" do
+    before(:each) do
+      current_time = Time.now
+      @log_entry = [SimpleUUID::UUID.new, "#{current_time.year}/#{current_time.month}/#{current_time.day}/#{current_time.hour}"]
+      @data_store  = Constellation::DataStore.instance
+      @data_store.stub!(:get).and_return("uuid" => @log_entry.first.to_guid, "application" => "ruby", "machine" => "www0", "message" => "I love Ruby.")
+    end
+
+    it "should generate a guid" do
+      @log_entry.first.should_receive(:to_guid)
+      LogEntry::parse_log_entry(@log_entry)
+    end
+
+    it "should retrieve the log entry from the Cassandra store" do
+      @data_store.should_receive(:get).with(:logs, @log_entry[1], @log_entry.first.to_guid)
+      LogEntry::parse_log_entry(@log_entry)
+    end
+  end
+
   describe ".get" do
     it "should call the data store" do
       LogEntry.stub!(:new)
