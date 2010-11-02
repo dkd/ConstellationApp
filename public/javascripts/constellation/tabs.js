@@ -16,65 +16,15 @@ Constellation.Tabs = Ext.extend(Ext.TabPanel, {
 			{
 				id: 			'main-view',
 				layout: {
-					type:'vbox',
-					align:'stretch'
+					type: 	'vbox',
+					align: 	'stretch'
 				},
 				title: 		'All log entries',
 				closable: true,
 				items:[
-				{
-					id: 			'add-filter',
-					xtype: 		'form',
-					hidden: 	true,
-					padding:  5,
-					title: 		'Filters',
-					items: [{
-						width:          150,
-						xtype:          'combo',
-						mode:           'local',
-						value:          'date',
-						triggerAction:  'all',
-						forceSelection: true,
-						editable:       false,
-						fieldLabel:     'Attribute',
-						name:           'attribute',
-						hiddenName:     'attribute',
-						displayField:   'name',
-						valueField:     'value',
-						store:          new Ext.data.JsonStore({
-							fields : ['name', 'value'],
-							data   : [
-							{name : 'Date',   value: 'date'},
-							{name : 'Machine',  value: 'machine'},
-							{name : 'Application', value: 'application'}
-							]
-						})
-					},	{
-						width:          150,
-						xtype:          'combo',
-						mode:           'local',
-						value:          'Compare',
-						triggerAction:  'all',
-						forceSelection: true,
-						editable:       false,
-						fieldLabel:     'Query type',
-						name:           'query-type',
-						hiddenName:     'query-type',
-						displayField:   'name',
-						valueField:     'value',
-						store:          new Ext.data.JsonStore({
-							fields : ['name', 'value'],
-							data   : [
-							{name : 'Compare', value: 'compare'},
-							{name : 'Range query', value: 'range-query'}
-							]
-						})
-						}],
-						buttons: [{
-							text: 'Add filter'
-						},{
-							text: 'Cancel'
-							}]
+						{
+							id: 		'add-filter',
+							xtype: 	'Constellation.Views.FilterForm'
 						},
 						{
 							flex: 	10,
@@ -95,4 +45,4 @@ Constellation.Tabs = Ext.extend(Ext.TabPanel, {
 			}
 		});
 
-		Ext.reg('Constellation.Tabs', Constellation.Tabs);
+Ext.reg('Constellation.Tabs', Constellation.Tabs);

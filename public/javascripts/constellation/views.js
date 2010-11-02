@@ -75,3 +75,87 @@ Constellation.Views.selectLogEntry = function(sel) {
 		detailElement.ownerCt.doLayout();
  	}
 }
+
+Constellation.Views.processFilterForm = function(params) {
+	var attribute 	= params["attribute"],
+			parameter 	= params["params"],
+			query_type 	= params["query-type"],
+			filterForm  = Ext.getCmp('filter-add');
+
+
+}
+
+Constellation.Views.FilterForm = 		Ext.extend(Ext.FormPanel, {
+			initComponent: function() {
+				var config = {
+						hidden: 	true,
+						padding:  5,
+						title: 		'Filters',
+						items: [{
+							width:          150,
+							xtype:          'combo',
+							mode:           'local',
+							value:          'date',
+							triggerAction:  'all',
+							forceSelection: true,
+							editable:       false,
+							fieldLabel:     'Attribute',
+							name:           'attribute',
+							hiddenName:     'attribute',
+							displayField:   'name',
+							valueField:     'value',
+							store:          new Ext.data.JsonStore({
+								fields : ['name', 'value'],
+								data   : [
+									{name : 'Date',   value: 'date'},
+									{name : 'Machine',  value: 'machine'},
+									{name : 'Application', value: 'application'}
+								]
+							})
+						},	{
+							width:          150,
+							xtype:          'combo',
+							mode:           'local',
+							value:          'Compare',
+							triggerAction:  'all',
+							forceSelection: true,
+							editable:       false,
+							fieldLabel:     'Query type',
+							name:           'query-type',
+							hiddenName:     'query-type',
+							displayField:   'name',
+							valueField:     'value',
+							store:          new Ext.data.JsonStore({
+								fields : ['name', 'value'],
+								data   : [
+								{name : 'Compare', value: 'compare'},
+								{name : 'Range query', value: 'range-query'}
+								]
+							})
+							}, 	{
+								fieldLabel: 'Parameters',
+								xtype: 			'textfield',
+                name: 			'params',
+								width: 			150
+							}
+						],
+						buttons: [{
+							text: 		'Add filter',
+							handler: 	function() {
+								Constellation.Views.processFilterForm(Ext.getCmp('add-filter').form.getValues());
+							}
+						},{
+							text: 		'Cancel',
+							handler: 	function(){
+								var filterElement = Ext.getCmp('add-filter');
+								filterElement.hide();
+								filterElement.ownerCt.doLayout();
+							}
+						}]
+				};
+				Ext.apply(this, config);
+				Constellation.Views.FilterForm.superclass.initComponent.call(this);
+			}
+		});
+
+Ext.reg('Constellation.Views.FilterForm', Constellation.Views.FilterForm);
