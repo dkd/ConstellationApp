@@ -105,13 +105,13 @@ class LogEntry < Constellation::LogEntry
     #
     # E.g. if you want to retrieve only log entries between Nov 1 2010 and Nov 10 2010, you can do this by:
     #
-    #   LogEntry.where(:attribute => "timestamp")
+    #   LogEntry.where(:property => "timestamp")
     #
     def where(options={})
       results       = []
       current_time  = Time.now
       key           = "#{current_time.year}/#{current_time.month}/#{current_time.day}/#{current_time.hour}"
-      case options[:attribute]
+      case options[:property]
       when "application"
         column_family = :logs_by_application
       when "machine"

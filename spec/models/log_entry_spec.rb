@@ -62,21 +62,21 @@ describe LogEntry do
     end
 
     context "given a compare query" do
-      it "should query the given attribute's column family" do
+      it "should query the given property's column family" do
         @data_store.should_receive(:get).with(:logs_by_application, @key, "ruby").and_return([])
-        LogEntry.where(:attribute => "application", :equals => "ruby")
+        LogEntry.where(:property => "application", :equals => "ruby")
       end
 
-      context "given one attribute value" do
+      context "given one property value" do
         it "should return only log entries matching the given parameter" do
-          LogEntry.where(:attribute => "application", :equals => "ruby").each { |log_entry| log_entry.application.should eql("ruby") }
+          LogEntry.where(:property => "application", :equals => "ruby").each { |log_entry| log_entry.application.should eql("ruby") }
         end
       end
 
-      context "given multiple attribute values" do
+      context "given multiple property values" do
         it "should return only log entries matching the given parameters" do
           @data_store.should_receive(:get).with(:logs_by_application, @key, anything).exactly(3).times.and_return([])
-          LogEntry.where(:attribute => "application", :includes => ["ruby", "cassandra", "mail"])
+          LogEntry.where(:property => "application", :includes => ["ruby", "cassandra", "mail"])
         end
       end
     end
@@ -84,7 +84,7 @@ describe LogEntry do
     context "given a range query" do
       it "should return log entries matching the given range" do
         @data_store.should_receive(:get).with(:logs_by_application, @key, :start => "ruby", :finish => "php").and_return([])
-        LogEntry.where(:attribute => "application", :start => "ruby", :end => "php")
+        LogEntry.where(:property => "application", :start => "ruby", :end => "php")
       end
     end
   end
