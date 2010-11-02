@@ -54,6 +54,41 @@ describe LogEntry do
     end
   end
 
+  describe ".where" do
+    before(:each) do
+      @data_store  = Constellation::DataStore.instance
+      current_time = Time.now
+      @key = "#{current_time.year}/#{current_time.month}/#{current_time.day}/#{current_time.hour}"
+    end
+
+    context "given a compare query" do
+      it "should query the given attribute's column family" do
+        @data_store.should_receive(:get).with(:logs_by_application, @key, "ruby").and_return([])
+        LogEntry.where(:attribute => "application", :equals => "ruby")
+      end
+
+      context "given one attribute value" do
+        it "should return only log entries matching the given parameter" do
+          LogEntry.where(:attribute => "application", :equals => "ruby").each { |log_entry| log_entry.application.should eql("ruby") }
+        end
+      end
+
+      context "given multiple attribute values" do
+        it "should return only log entries matching the given parameters" do
+          @data_store.should_receive(:get).with(:logs_by_application, @key, anything).exactly(3).times.and_return([])
+          LogEntry.where(:attribute => "application", :includes => ["ruby", "cassandra", "mail"])
+        end
+      end
+    end
+
+    context "given a range query" do
+      it "should return log entries matching the given range" do
+        @data_store.should_receive(:get).with(:logs_by_application, @key, :start => "ruby", :finish => "php").and_return([])
+        LogEntry.where(:attribute => "application", :start => "ruby", :end => "php")
+      end
+    end
+  end
+
   describe ".get" do
     it "should call the data store" do
       LogEntry.stub!(:new)
