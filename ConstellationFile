@@ -1,5 +1,5 @@
 # Adds the file 'syslog' to the list of watched log files
-#watch "/var/log/syslog"
+watch "/var/log/system.log"
 
 # Wait 1 seconds between scanning the log file for new log entries
 reading_buffer = 1
