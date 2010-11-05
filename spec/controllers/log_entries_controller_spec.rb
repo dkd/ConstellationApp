@@ -10,7 +10,7 @@ describe LogEntriesController do
   end
 
   describe "GET /log_entries" do
-    it_should_be_protected :index
+    it_should_be_protected :get, :index
 
     it "should render all log entries" do
       LogEntry.should_receive(:current_epoch)
