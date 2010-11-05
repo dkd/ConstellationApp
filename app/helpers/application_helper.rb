@@ -3,7 +3,8 @@ module ApplicationHelper
   def include_javascript
     if user_signed_in?
       javascript_include_tag("ext/adapter/ext/ext-base", "ext/ext-all", "GroupTab", "GroupTabPanel", "TabCloseMenu",
-                              "constellation/rendering", "constellation/users", "constellation/views", "constellation/tabs", "constellation/ui", "constellation/constellation",
+                              "constellation/rendering", "constellation/users", "constellation/views", "constellation/views.filterform", "constellation/views.datamodel",
+                              "constellation/tabs", "constellation/ui", "constellation/constellation",
                               "application", :cache => true)
     end
   end
