@@ -3,41 +3,38 @@ Ext.namespace('Constellation.Views');
 Constellation.Views.template = Ext.extend(Ext.Panel, {
 	initComponent: function() {
 		var config = {
-			id: 			el.view.id,
-      title: 		el.view.title,
+			title: 		this.viewElement.title,
       iconCls: 	'tabs',
 			layout: {
 				type: 	'vbox',
 				align: 	'stretch'
 			},
 			listeners: {
+				scope: 			this,
 				'close': 		function() {
 					Ext.Ajax.request({
-					   url: 		'/views/'+ this.id +'.json',
-						 method: 	'DELETE',
-					   success: function(response) {
-							console.log('Deleted!');
-						 }
+					   url: 		'/views/'+ this.viewElement.id +'.json',
+						 method: 	'DELETE'
 					});
 				}
 			},
 			items: [
 				{
-					id: 							'add-filter-'+el.view.id,
-					viewId: 					el.view.id,
-					filterProperty: 	el.view.filter ? el.view.filter.property : '',
-					filterQueryType: 	el.view.filter ? el.view.filter.query_type : '',
-					filterEquals: 		el.view.filter ? el.view.filter.equals : '',
+					id: 							'add-filter-'+this.viewElement.id,
+					viewId: 					this.viewElement.id,
+					filterProperty: 	this.viewElement.filter ? this.viewElement.filter.property : '',
+					filterQueryType: 	this.viewElement.filter ? this.viewElement.filter.query_type : '',
+					filterEquals: 		this.viewElement.filter ? this.viewElement.filter.equals : '',
 					xtype: 						'Constellation.Views.FilterForm'
 				},
 				{
-					viewId: 	el.view.id,
+					viewId: 	this.viewElement.id,
 					flex: 		10,
 					xtype: 		'Constellation.Ui.Views.Grid'
 				},
 				{
-					id: 			'details-'+el.view.id,
-					viewId: 	el.view.id,
+					id: 			'details-'+this.viewElement.id,
+					viewId: 	this.viewElement.id,
 					xtype: 		'panel',
 					hidden: 	true,
 					padding: 	5,
@@ -46,7 +43,8 @@ Constellation.Views.template = Ext.extend(Ext.Panel, {
 			],
       closable: true
 		};
-		Ext.apply(this, config);
+
+		Ext.apply(this, Ext.apply(config, this.initialConfig));
 		Constellation.Views.template.superclass.initComponent.call(this);
 	}
 });

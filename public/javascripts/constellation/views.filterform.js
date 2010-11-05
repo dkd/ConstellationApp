@@ -9,19 +9,21 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 						query_type 	= params["query-type"],
 						filterForm  = Ext.getCmp('filter-add'),
 						that 				= this;
+
 				this.ownerCt.setTitle(viewTitle);
 				Ext.Ajax.request({
-					url: 		'/views/'+ this.ownerCt.id +'.json',
+					url: 		'/views/'+ this.ownerCt.viewElement.id +'.json',
 					method: 	'PUT',
 				  success: function() {
-						that.hideForm();
+						this.hideForm();
 				 	},
 				  params: 	{
 						"view[title]": viewTitle,
 						"view[filter_attributes][property]": 		property,
 						"view[filter_attributes][query_type]": 	query_type,
 						"view[filter_attributes][equals]": 			equals
-					}
+					},
+					scope: this
 				});
 			},
 			hideForm: function() {
@@ -68,6 +70,7 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 							triggerAction:  'all',
 							forceSelection: true,
 							editable:       false,
+							value:          this.filterQueryType,
 							fieldLabel:     'Query type',
 							name:           'query-type',
 							hiddenName:     'query-type',
@@ -84,6 +87,7 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 								fieldLabel: 'Equals',
 								xtype: 			'textfield',
                 name: 			'equals',
+								value: 			this.filterEquals,
 								width: 			150
 							}
 						],
