@@ -6,7 +6,7 @@ describe ViewsController do
   before(:each) do
     @user = Factory.create(:user)
     sign_in :user, @user
-    @view = mock(View, :destroy => true, :update_attributes => true)
+    @view = mock(View, :destroy => true, :update_attributes => true, :render => nil)
     View.stub!(:find).and_return(@view)
     @user.stub!(:views).and_return(View)
     controller.stub!(:current_user).and_return(@user)
@@ -21,14 +21,24 @@ describe ViewsController do
 
     it "should render the given view" do
       @view = mock(View)
-      View.stub!(:new).and_return(@view)
+      View.stub!(:find).and_return(@view)
       @view.should_receive(:render)
+      get :show, :id => 1
+    end
+
+    it "should render only the current user's views" do
+      @user.should_receive(:views)
       get :show, :id => 1
     end
   end
 
   describe "POST /views" do
     it_should_be_protected :post, :create
+
+    it "should create a view for the current user" do
+      @user.should_receive(:views)
+      post :create
+    end
   end
 
   describe "PUT /views/:id" do
@@ -48,6 +58,13 @@ describe ViewsController do
       controller.should_receive(:find_view)
       controller.instance_variable_set("@view", @view)
       xhr :delete, :destroy, :id => 1
+    end
+  end
+
+  describe "#find_view" do
+    it "should search only for views of the current user" do
+      @user.should_receive(:views)
+      controller.find_view
     end
   end
 
