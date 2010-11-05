@@ -39,19 +39,22 @@ Constellation.Views.model = new Ext.grid.ColumnModel([{
 
 Constellation.Views.model.defaultSortable = true;
 
-Constellation.Views.FilterForm = 		Ext.extend(Ext.FormPanel, {
+Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 			processForm: function() {
 				var params 			= this.form.getValues(),
 						viewTitle 	= params["title"],
 						property	 	= params["property"],
 						equals 			= params["equals"],
 						query_type 	= params["query-type"],
-						filterForm  = Ext.getCmp('filter-add');
+						filterForm  = Ext.getCmp('filter-add'),
+						that 				= this;
 				this.ownerCt.setTitle(viewTitle);
 				Ext.Ajax.request({
 					url: 		'/views/'+ this.ownerCt.id +'.json',
 					method: 	'PUT',
-				  success: Constellation.Views.FilterForm.hideForm,
+				  success: function() {
+						that.hideForm();
+				 	},
 				  params: 	{
 						"view[title]": viewTitle,
 						"view[filter_attributes][property]": 		property,

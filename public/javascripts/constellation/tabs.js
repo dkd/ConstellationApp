@@ -19,7 +19,6 @@ Constellation.Tabs = Ext.extend(Ext.TabPanel, {
 					   success: function(response) {
 								var views = Ext.decode(response.responseText);
 								Ext.each(views, function(el) {
-									console.log(el);
 									Ext.getCmp('view-tabs').add({
 															id: 			el.view.id,
 									            title: 		el.view.title,
