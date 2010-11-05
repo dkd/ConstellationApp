@@ -1,15 +1,5 @@
 Ext.namespace('Constellation.Views');
 
-Constellation.Views.store = new Ext.data.JsonStore({
-		autoLoad: 		true,
-    autoDestroy: 	true,
-    proxy: 				new Ext.data.HttpProxy({url: '/views/1.json', method: 'GET'}),
-    storeId: 			'myStore',
-    root: 				'log_entries',
-    idProperty: 	'uuid',
-    fields: 			['uuid', 'machine', 'application', 'timestamp', 'message']
-});
-
 Constellation.Views.model = new Ext.grid.ColumnModel([{
 					id: 				'timestamp',
 					header: 		'Date',

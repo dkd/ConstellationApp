@@ -16,6 +16,7 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 					method: 	'PUT',
 				  success: function() {
 						this.hideForm();
+						Ext.getCmp('view-grid-'+this.viewId).store.load();
 				 	},
 				  params: 	{
 						"view[title]": viewTitle,

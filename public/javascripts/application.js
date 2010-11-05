@@ -28,7 +28,7 @@ Ext.onReady(function() {
         			        tabTip: 	'Templates tabtip',
         			        style: 		'padding: 10px;',
         			        layout: 	'fit',
-											items: 		[{ xtype:'Constellation.Ui.Users'}]
+											items: 		[{ xtype:'Constellation.Ui.Users.Grid'}]
         			 		}]
         			}]
 					}]

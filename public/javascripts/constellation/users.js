@@ -3,7 +3,10 @@ Ext.namespace('Constellation.Users');
 Constellation.Users.store = new Ext.data.JsonStore({
 		autoLoad: 		true,
     autoDestroy: 	true,
-    proxy: 				new Ext.data.HttpProxy({url: '/users.json', method: 'GET'}),
+    proxy: 				new Ext.data.HttpProxy({
+										url: '/users.json',
+										method: 'GET'
+									}),
     idProperty: 	'user.id',
     fields: 			['user.id', 'user.email']
 });

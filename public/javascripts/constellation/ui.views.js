@@ -1,43 +1,6 @@
 Ext.namespace('Constellation.Ui');
 Ext.namespace('Constellation.Ui.Views');
 
-Constellation.Ui.Users = Ext.extend(Ext.grid.GridPanel, {
-	initComponent: function() {
-		var config = {
-				title: 'User administration',
-				region: 'center',
-				cls: 		'constellation-users-grid',
-			  store: 	Constellation.Users.store,
-			  cm: 		Constellation.Users.model,
-			  sm: 		new Ext.grid.RowSelectionModel({
-			      			singleSelect: true
-			  				}),
-			  trackMouseOver: 	false,
-			  loadMask: 				{ msg: 'Loading log entries...' },
-			  viewConfig: {
-			      forceFit: 		true,
-			      enableRowBody:false,
-			      showDetails: 	true
-			  },
-			  tbar:[
-			      {
-			          text: 				'Create user',
-			          tooltip: 			{ title: 'Create user', text: 'Create a new user.' }
-			      }
-			  ],
-			  bbar: new Ext.PagingToolbar({
-			      pageSize: 		25,
-			      store: 				Constellation.Users.store,
-			      displayInfo: 	true,
-			      displayMsg: 	'Displaying log entries {0} - {1} of {2}',
-			      emptyMsg: 		"No log entries to display"
-			  })
-		};
-		Ext.apply(this, config);
-		Constellation.Ui.Users.superclass.initComponent.call(this);
-	}
-});
-
 Constellation.Ui.Views.Grid = Ext.extend(Ext.grid.GridPanel, {
 	renderFilterForm: function() {
 		var filterElement = Ext.getCmp('add-filter-'+this.viewId);
@@ -81,7 +44,9 @@ Constellation.Ui.Views.Grid = Ext.extend(Ext.grid.GridPanel, {
 	initComponent: function() {
 		var config = {
 				cls: 		'constellation-view-grid',
-			  store: 	Constellation.Views.store,
+			  store: 	new Constellation.Views.store({
+									viewId: this.viewId
+								}),
 			  cm: 		Constellation.Views.model,
 			  sm: 		new Ext.grid.RowSelectionModel({
 			      			singleSelect: true,
@@ -111,20 +76,18 @@ Constellation.Ui.Views.Grid = Ext.extend(Ext.grid.GridPanel, {
 			          handler: 			function() {
 									this.ownerCt.ownerCt.addNewView();
 								}
+						}, '-', 		{
+								xtype: 'tbbutton',
+								iconCls: 'x-tbar-loading',
+								handler: function() {
+									this.ownerCt.ownerCt.store.load();
+								}
 						}
-			  ],
-			  bbar: new Ext.PagingToolbar({
-			      pageSize: 		25,
-			      store: 				Constellation.Views.store,
-			      displayInfo: 	true,
-			      displayMsg: 	'Displaying log entries {0} - {1} of {2}',
-			      emptyMsg: 		"No log entries to display"
-			  })
+			  ]
 		};
 		Ext.apply(this, config);
 		Constellation.Ui.Views.Grid.superclass.initComponent.call(this);
 	}
 });
 
-Ext.reg('Constellation.Ui.Users', Constellation.Ui.Users);
 Ext.reg('Constellation.Ui.Views.Grid', Constellation.Ui.Views.Grid);

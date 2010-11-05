@@ -28,6 +28,7 @@ Constellation.Views.template = Ext.extend(Ext.Panel, {
 					xtype: 						'Constellation.Views.FilterForm'
 				},
 				{
+					id: 			'view-grid-'+this.viewElement.id,
 					viewId: 	this.viewElement.id,
 					flex: 		10,
 					xtype: 		'Constellation.Ui.Views.Grid'
