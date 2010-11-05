@@ -40,7 +40,7 @@ Constellation.Ui.Users = Ext.extend(Ext.grid.GridPanel, {
 
 Constellation.Ui.Views.Grid = Ext.extend(Ext.grid.GridPanel, {
 	renderFilterForm: function() {
-		var filterElement = Ext.getCmp('add-filter-'+this.gridId);
+		var filterElement = Ext.getCmp('add-filter-'+this.viewId);
 		filterElement[filterElement.isVisible() ? "hide" : "show"]();
 		filterElement.ownerCt.doLayout();
 	},
@@ -49,10 +49,50 @@ Constellation.Ui.Views.Grid = Ext.extend(Ext.grid.GridPanel, {
 		   url: 		'/views.json',
 			 method: 	'POST',
 		   success: function(response) {
+					var el = Ext.decode(response.responseText);
+					console.log(el);
 					Ext.getCmp('view-tabs').add({
-					            title: 		'New View',
+											id: 			el.view.id,
+					            title: 		el.view.title,
 					            iconCls: 	'tabs',
-											xtype: 		'Constellation.Ui.Views.Grid',
+											layout: {
+												type: 	'vbox',
+												align: 	'stretch'
+											},
+											listeners: {
+												'close': 		function() {
+													Ext.Ajax.request({
+													   url: 		'/views/'+ this.id +'.json',
+														 method: 	'DELETE',
+													   success: function(response) {
+															console.log('Deleted!');
+														 }
+													});
+												}
+											},
+											items: [
+												{
+													id: 							'add-filter-'+el.view.id,
+													viewId: 					el.view.id,
+													filterProperty: 	el.view.filter ? el.view.filter.property : '',
+													filterQueryType: 	el.view.filter ? el.view.filter.query_type : '',
+													filterEquals: 		el.view.filter ? el.view.filter.equals : '',
+													xtype: 						'Constellation.Views.FilterForm'
+												},
+												{
+													viewId: 	el.view.id,
+													flex: 		10,
+													xtype: 		'Constellation.Ui.Views.Grid'
+												},
+												{
+													id: 			'details-'+el.view.id,
+													viewId: 	el.view.id,
+													xtype: 		'panel',
+													hidden: 	true,
+													padding: 	5,
+													title: 		'View details'
+												}
+											],
 					            closable: true
 					        });
 			 },
@@ -73,7 +113,7 @@ Constellation.Ui.Views.Grid = Ext.extend(Ext.grid.GridPanel, {
 	renderLogEntryDetail: function(sel) {
 		var record = sel.getSelected();
 	 	if(record){
-	    var detailElement = Ext.getCmp('details-'+this.gridId);
+	    var detailElement = Ext.getCmp('details-'+this.viewId);
 			detailElement.body.update(this.renderDetailContent(record));
 			detailElement.show();
 			detailElement.ownerCt.doLayout();
@@ -101,8 +141,8 @@ Constellation.Ui.Views.Grid = Ext.extend(Ext.grid.GridPanel, {
 			  },
 			  tbar:[
 			      {
-			          text: 				'Add Filter',
-			          tooltip: 			{ title: 'Add Filter', text: 'Filter the given log entries.' },
+			          text: 				'Settings',
+			          tooltip: 			{ title: 'Settings', text: 'Configure this view.' },
 			          handler: 			function() {
 									this.ownerCt.ownerCt.renderFilterForm();
 								}

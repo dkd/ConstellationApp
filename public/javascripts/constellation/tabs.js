@@ -19,6 +19,7 @@ Constellation.Tabs = Ext.extend(Ext.TabPanel, {
 					   success: function(response) {
 								var views = Ext.decode(response.responseText);
 								Ext.each(views, function(el) {
+									console.log(el);
 									Ext.getCmp('view-tabs').add({
 															id: 			el.view.id,
 									            title: 		el.view.title,
@@ -40,17 +41,21 @@ Constellation.Tabs = Ext.extend(Ext.TabPanel, {
 															},
 															items: [
 																{
-																	id: 		'add-filter-'+el.view.id,
-																	xtype: 	'Constellation.Views.FilterForm'
+																	id: 							'add-filter-'+el.view.id,
+																	viewId: 					el.view.id,
+																	filterProperty: 	el.view.filter ? el.view.filter.property : '',
+																	filterQueryType: 	el.view.filter ? el.view.filter.query_type : '',
+																	filterEquals: 		el.view.filter ? el.view.filter.equals : '',
+																	xtype: 						'Constellation.Views.FilterForm'
 																},
 																{
-																	id: 		'grid-'+el.view.id,
-																	gridId: el.view.id,
-																	flex: 	10,
-																	xtype: 	'Constellation.Ui.Views.Grid'
+																	viewId: 	el.view.id,
+																	flex: 		10,
+																	xtype: 		'Constellation.Ui.Views.Grid'
 																},
 																{
 																	id: 			'details-'+el.view.id,
+																	viewId: 	el.view.id,
 																	xtype: 		'panel',
 																	hidden: 	true,
 																	padding: 	5,
