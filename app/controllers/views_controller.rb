@@ -13,7 +13,7 @@ class ViewsController < ApplicationController
   # GET /views/:id.json
   #----------------------------------------------------------------------------
   def show
-    render :json => { "log_entries" => current_user.views.new.render }.to_json
+    render :json => { "log_entries" => current_user.views.find(params[:id]).render }.to_json
   end
 
   # GET /views.json
