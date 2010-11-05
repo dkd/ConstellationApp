@@ -13,7 +13,7 @@ describe UsersController do
   end
 
   describe "GET /users.json" do
-    it_should_be_protected :index, :format => :json
+    it_should_be_protected :get, :index, :format => :json
 
     it "should render only id and email attributes" do
       controller.stub!(:authenticate_user!)
