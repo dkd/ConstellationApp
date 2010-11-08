@@ -31,6 +31,34 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 				this.hide();
 				this.ownerCt.doLayout();
 			},
+			processPropertyField: function(field) {
+				if(field.value=="date") {
+					if(Ext.getCmp('equals-'+this.viewId) != undefined) {
+						Ext.getCmp('equals-'+this.viewId).destroy();
+						this.add({
+							id: 				'equals-date-'+this.viewId,
+							fieldLabel: 'Equals',
+							xtype: 			'datefield',
+							name: 			'equals',
+							value: 			this.filterEquals,
+							width: 			150
+						});
+					}
+				} else {
+					if(Ext.getCmp('equals-date-'+this.viewId) != undefined) {
+						Ext.getCmp('equals-date-'+this.viewId).destroy();
+						this.add({
+							id: 				'equals-'+this.viewId,
+							fieldLabel: 'Equals',
+							xtype: 			'textfield',
+							name: 			'equals',
+							value: 			this.filterEquals,
+							width: 			150
+						});
+					}
+				}
+				this.ownerCt.doLayout();
+			},
 			initComponent: function() {
 				var config = {
 						hidden: 	true,
@@ -55,6 +83,12 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 							hiddenName:     'property',
 							displayField:   'name',
 							valueField:     'value',
+							listeners: {
+								select: function(field) {
+									this.processPropertyField(field);
+								},
+								scope: this
+							},
 							store:          new Ext.data.JsonStore({
 								fields : ['name', 'value'],
 								data   : [
@@ -80,14 +114,15 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 							store:          new Ext.data.JsonStore({
 								fields : ['name', 'value'],
 								data   : [
-								{name : 'Compare', value: 'compare'},
-								{name : 'Range query', value: 'range-query'}
+									{ name : 'Compare', value: 'compare' },
+									{ name : 'Range query', value: 'range-query' }
 								]
 							})
 							}, 	{
+								id: 				'equals-'+this.viewId,
 								fieldLabel: 'Equals',
 								xtype: 			'textfield',
-                name: 			'equals',
+								name: 			'equals',
 								value: 			this.filterEquals,
 								width: 			150
 							}

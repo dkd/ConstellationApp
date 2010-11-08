@@ -16,6 +16,19 @@ Constellation.Views.template = Ext.extend(Ext.Panel, {
 					   url: 		'/views/'+ this.viewElement.id +'.json',
 						 method: 	'DELETE'
 					});
+				},
+				'afterrender': 	function() {
+					if(this.viewElement.filter && this.viewElement.filter.property=="date") {
+						Ext.getCmp('equals-'+this.viewId).destroy();
+						Ext.getCmp('add-filter-'+this.viewElement.id).add({
+							id: 				'equals-date-'+this.viewId,
+							fieldLabel: 'Equals',
+							xtype: 			'datefield',
+							name: 			'equals',
+							value: 			this.filterEquals,
+							width: 			150
+						});
+					}
 				}
 			},
 			items: [
