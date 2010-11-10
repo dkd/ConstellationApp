@@ -8,11 +8,10 @@ Ext.onReady(function() {
     				tabWidth: 130,
     				activeGroup: 0,
     				items: [{
-    						mainItem: 0,
     						items: [{
     								title: 		'Log entries',
             		    iconCls: 	'x-icon-subscriptions',
-            		    tabTip: 	'Subscriptions tabtip',
+            		    tabTip: 	'View log entries',
             		    style: 		'padding: 10px;',
 										layout: 	'fit',
     								items: 		[{
@@ -21,11 +20,12 @@ Ext.onReady(function() {
 										}]
     						}]
         			}, {
-        			    expanded: 	true,
         			    items: 			[{
+											title: 		'Administration'
+									}, {
         			        title: 		'Users',
         			        iconCls: 	'x-icon-templates',
-        			        tabTip: 	'Templates tabtip',
+        			        tabTip: 	'View and administrate users',
         			        style: 		'padding: 10px;',
         			        layout: 	'fit',
 											items: 		[{ xtype:'Constellation.Ui.Users.Grid'}]
