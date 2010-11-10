@@ -4,10 +4,7 @@ class ViewsController < ApplicationController
   # GET /views
   #----------------------------------------------------------------------------
   def index
-    respond_to do |format|
-      format.html
-      format.json { render :json => current_user.views.find(:all).to_json(:include => :filter) }
-    end
+    render :json => current_user.views.find(:all).to_json(:include => :filter)
   end
 
   # GET /views/:id.json
