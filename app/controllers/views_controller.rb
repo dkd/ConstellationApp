@@ -21,7 +21,7 @@ class ViewsController < ApplicationController
   def create
     view = current_user.views.new(params[:view])
     if view.save
-      render :json => view
+      render :json => view.to_json(:include => :filter)
     else
       render :json => view.errors
     end

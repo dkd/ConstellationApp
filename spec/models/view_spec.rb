@@ -17,6 +17,22 @@ describe View do
         LogEntry.should_receive(:where).with(:property => @view.filter.property, :equals => @view.filter.equals)
         @view.render
       end
+
+      context "given a date" do
+        before(:each) do
+          @view.filter = Factory.build(:filter, :property => "date", :equals => "2010/11/08")
+        end
+
+        it "should parse two dates" do
+          Time.should_receive(:parse).twice
+          @view.render
+        end
+
+        it "should send two Time objects" do
+          LogEntry.should_receive(:where).with(:start => Time.parse(@view.filter.equals), :property => @view.filter.property, :end => Time.parse(@view.filter.equals))
+          @view.render
+        end
+      end
     end
 
     context "a range filter given" do
@@ -33,6 +49,22 @@ describe View do
       end
     end
 
+    context "given a date" do
+      before(:each) do
+        @view.filter = Factory.build(:filter, :property => "date", :start => "2010/11/08", :end => "2010/11/09", :query_type => "range")
+      end
+
+      it "should parse two dates" do
+        Time.should_receive(:parse).twice
+        @view.render
+      end
+
+      it "should send a Time object" do
+        LogEntry.should_receive(:where).with(:start => Time.parse(@view.filter.start), :end => Time.parse(@view.filter.end), :property => @view.filter.property)
+        @view.render
+      end
+    end
+
     context "no filter given" do
       before(:each) do
         @view.filter = nil
@@ -41,6 +73,16 @@ describe View do
       it "should render all available log entries" do
         LogEntry.should_receive(:all)
         @view.render
+      end
+    end
+  end
+
+  describe "#create" do
+    context "given no filter" do
+      it "should create a filter" do
+        @filter = Factory(:filter)
+        Filter.should_receive(:new).and_return(@filter)
+        View.create(:title => "test")
       end
     end
   end

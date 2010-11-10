@@ -105,7 +105,7 @@ class LogEntry < Constellation::LogEntry
     #
     # E.g. if you want to retrieve only log entries between Nov 1 2010 and Nov 10 2010, you can do this by:
     #
-    #   LogEntry.where(:property => "timestamp")
+    #   LogEntry.where(:property => "timestamp", :start => Time.parse("Nov 1 2010"), :end => Time.parse("Nov 10 2010"))
     #
     def where(options={})
       results       = []
@@ -126,11 +126,27 @@ class LogEntry < Constellation::LogEntry
           @@data_store.get(column_family, key, value).each { |log_entry| results << parse_log_entry(log_entry) }
         }
       elsif options[:start] && options[:end]
+        results = range(column_family, key, :start => options[:start], :end => options[:end])
+      end
+      results
+    end
+
+    def range(column_family, key, options={})
+      results = []
+      if column_family==:logs
         @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each { |log_entry|
-          uuid               = log_entry[1].keys.first.to_guid
-          attributes         = @@data_store.get(:logs, log_entry.first, uuid)
-          attributes["uuid"] = uuid
-          results            << new(attributes)
+          attributes = log_entry[1]
+          attributes["uuid"] = log_entry[0].to_guid
+          results << new(attributes)
+        }
+      else
+        @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each { |attribute_value|
+          attribute_value[1].keys.each { |uuid|
+            guid               = uuid.to_guid
+            attributes         = @@data_store.get(:logs, key, guid)
+            attributes["uuid"] = guid
+            results            << new(attributes)
+          }
         }
       end
       results

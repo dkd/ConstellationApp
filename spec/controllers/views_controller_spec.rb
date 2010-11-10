@@ -6,7 +6,8 @@ describe ViewsController do
   before(:each) do
     @user = Factory.create(:user)
     sign_in :user, @user
-    @view = mock(View, :destroy => true, :update_attributes => true, :render => nil)
+    @view = mock(View, :save => true, :destroy => true, :update_attributes => true, :render => nil, :to_json => {})
+    View.stub!(:new).and_return(@view)
     View.stub!(:find).and_return(@view)
     @user.stub!(:views).and_return(View)
     controller.stub!(:current_user).and_return(@user)
@@ -39,6 +40,17 @@ describe ViewsController do
       @user.should_receive(:views)
       post :create
     end
+
+    context "given save was not successful" do
+      before(:each) do
+        @view.stub!(:save).and_return(false)
+      end
+
+      it "should render the errors" do
+        @view.should_receive(:errors)
+        post :create
+      end
+    end
   end
 
   describe "PUT /views/:id" do
@@ -49,6 +61,17 @@ describe ViewsController do
       controller.instance_variable_set("@view", @view)
       xhr :put, :update, :id => 1
     end
+
+    context "given update was not successful" do
+      before(:each) do
+        @view.stub!(:update_attributes).and_return(false)
+      end
+
+      it "should render the errors" do
+        @view.should_receive(:errors)
+        xhr :put, :update, :id => 1
+      end
+    end
   end
 
   describe "DELETE /views/:id" do
@@ -58,6 +81,17 @@ describe ViewsController do
       controller.should_receive(:find_view)
       controller.instance_variable_set("@view", @view)
       xhr :delete, :destroy, :id => 1
+    end
+
+    context "given destroy was not successful" do
+      before(:each) do
+        @view.stub!(:destroy).and_return(false)
+      end
+
+      it "should render the errors" do
+        @view.should_receive(:errors)
+        xhr :delete, :destroy, :id => 1
+      end
     end
   end
 
