@@ -30,12 +30,14 @@ Constellation.Views.template = Ext.extend(Ext.Panel, {
 							      name      : 'start',
 							      fieldLabel: 'Start',
 										format: 		'm/d/Y H:i:s',
+										value: 			this.filterStart,
 										width: 			150
 									}, {
 							      xtype     : 'datefield',
 							      name      : 'end',
 							      fieldLabel: 'End',
 										format: 		'm/d/Y H:i:s',
+										value: 			this.filterEnd,
 										width: 			150
 							    }]
 							});
@@ -62,11 +64,13 @@ Constellation.Views.template = Ext.extend(Ext.Panel, {
 							    	xtype: 			'textfield',
 							      name: 			'start',
 							      fieldLabel: 'Start',
+										value: 			this.filterStart,
 										width: 			150
 									}, {
 							      xtype: 			'textfield',
 							      name: 			'end',
 							      fieldLabel: 'End',
+										value: 			this.filterEnd,
 										width: 			150
 							    }]
 							});
@@ -83,30 +87,28 @@ Constellation.Views.template = Ext.extend(Ext.Panel, {
 					}
 				}
 			},
-			items: [
-				{
+			items: [{
 					id: 							'add-filter-'+this.viewElement.id,
 					viewId: 					this.viewElement.id,
 					filterProperty: 	this.viewElement.filter ? this.viewElement.filter.property : '',
 					filterQueryType: 	this.viewElement.filter ? this.viewElement.filter.query_type : '',
 					filterEquals: 		this.viewElement.filter ? this.viewElement.filter.equals : '',
+					filterStart: 			this.viewElement.filter ? this.viewElement.filter.start : '',
+					filterEnd: 				this.viewElement.filter ? this.viewElement.filter.end : '',
 					xtype: 						'Constellation.Views.FilterForm'
-				},
-				{
+				}, {
 					id: 			'view-grid-'+this.viewElement.id,
 					viewId: 	this.viewElement.id,
 					flex: 		10,
 					xtype: 		'Constellation.Ui.Views.Grid'
-				},
-				{
+				}, {
 					id: 			'details-'+this.viewElement.id,
 					viewId: 	this.viewElement.id,
 					xtype: 		'panel',
 					hidden: 	true,
 					padding: 	5,
 					title: 		'View details'
-				}
-			],
+				}],
       closable: true
 		};
 
