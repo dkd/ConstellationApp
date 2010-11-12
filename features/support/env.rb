@@ -64,5 +64,5 @@ data_store.keyspace = "constellation_test"
 data_store.establish_connection
 
 After('@cassandra') do
-  data_store.clear
+  Constellation::DataStore.instance.clear
 end

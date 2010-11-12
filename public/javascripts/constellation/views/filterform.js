@@ -184,7 +184,10 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 							displayField:   'name',
 							valueField:     'value',
 							listeners: {
-								select: function(field) {
+								change: function() {
+									this.renderForm();
+								},
+								select: function() {
 									this.renderForm();
 								},
 								scope: this

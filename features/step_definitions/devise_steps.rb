@@ -1,24 +1,26 @@
 require 'uri'
 require 'cgi'
-require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
+require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "base"))
 
 Given /^I am not authenticated$/ do
   visit('/users/sign_out') # ensure that at least
 end
 
 Given /^I have one\s+user "([^\"]*)" with password "([^\"]*)" and login "([^\"]*)"$/ do |email, password, login|
-  User.new(:email => email,
+  @user = User.new(:email => email,
            :login => login,
            :password => password,
-           :password_confirmation => password).save!
+           :password_confirmation => password)
+  @user.save!
 end
 
 Given /^I have one\s+administrator "([^\"]*)" with password "([^\"]*)" and login "([^\"]*)"$/ do |email, password, login|
-  User.new(:email => email,
+  @user = User.new(:email => email,
            :login => login,
            :password => password,
            :password_confirmation => password,
-           :administrator => true).save!
+           :administrator => true)
+  @user.save!
 end
 
 Given /^I am a new, authenticated user$/ do

@@ -11,7 +11,7 @@ gem 'fastthread'
 gem 'mysql'
 
 # Constellation
-gem 'constellation', '0.0.3'
+gem 'constellation'
 
 # Authentication
 gem 'devise'
@@ -33,8 +33,8 @@ end
 # Testing
 group :test do
   gem 'ruby_parser'
-  gem 'rspec-rails', '2.0.0'
-  gem 'rspec', '2.0.0'
+  gem 'rspec-rails'
+  gem 'rspec'
   gem 'capybara'
   gem 'cucumber-rails'
   gem 'database_cleaner'

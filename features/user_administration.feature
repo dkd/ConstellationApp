@@ -3,10 +3,9 @@ Feature: User administration
   As an administrator
   I want to use an administration
 
-  @javascript
   Scenario: List users
-    Given I am authenticated as an admin
-    And I have "3" users
+    Given I have "3" users
+    And I am authenticated as an admin
     When I go to the views page
     And I click the "Users" link
-    And I should see all users
+    Then I should see all users
