@@ -69,7 +69,7 @@ describe LogEntry do
 
       context "given one property value" do
         it "should return only log entries matching the given parameter" do
-          LogEntry.where(:property => "application", :equals => "ruby").each { |log_entry| log_entry.application.should eql("ruby") }
+          LogEntry.where(:property => "machine", :equals => "www42").each { |log_entry| log_entry.machine.should eql("www42") }
         end
       end
 
@@ -85,6 +85,15 @@ describe LogEntry do
       it "should return log entries matching the given range" do
         @data_store.should_receive(:get).with(:logs_by_application, @key, :start => "ruby", :finish => "php").and_return([])
         LogEntry.where(:property => "application", :start => "ruby", :end => "php")
+      end
+    end
+  end
+
+  describe ".range" do
+    context "given logs as column family" do
+      it "should call get_keys" do
+        LogEntry.should_receive(:get_keys).and_return([])
+        LogEntry.range(:logs, "", :start => Time.now, :end => Time.now+60*60)
       end
     end
   end
@@ -113,6 +122,35 @@ describe LogEntry do
       LogEntry.stub!(:new)
       LogEntry.__send__("class_variable_get", "@@data_store").should_receive(:get)
       LogEntry.get('123abc-321cd')
+    end
+  end
+
+  describe ".get_keys" do
+    context "given one date" do
+      it "should return one key" do
+        LogEntry.get_keys(Time.now-60*60*2).should have(1).item
+      end
+    end
+
+    context "given a range of two dates" do
+      it "should return multiple keys" do
+        LogEntry.get_keys(Time.now-60*60*2, Time.now).should have(3).items
+      end
+    end
+
+    context "given a range of 3 hours" do
+      it "should return 4 keys" do
+        LogEntry.get_keys(Time.now-60*60*3, Time.now).should have (4).items
+      end
+    end
+
+    it "should not include duplicates" do
+      # uniq! will return nil, if no duplicates were found
+      LogEntry.get_keys(Time.now, Time.now+60*60*15).uniq!.should be_nil
+    end
+
+    it "should return an Array" do
+      LogEntry.get_keys(Time.now).should be_an(Array)
     end
   end
 end

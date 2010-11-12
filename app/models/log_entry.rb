@@ -134,10 +134,12 @@ class LogEntry < Constellation::LogEntry
     def range(column_family, key, options={})
       results = []
       if column_family==:logs
-        @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each { |log_entry|
-          attributes = log_entry[1]
-          attributes["uuid"] = log_entry[0].to_guid
-          results << new(attributes)
+        get_keys(options[:start], options[:end]).each { |key|
+          @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each { |log_entry|
+            attributes = log_entry[1]
+            attributes["uuid"] = log_entry[0].to_guid
+            results << new(attributes)
+          }
         }
       else
         @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each { |attribute_value|
@@ -167,6 +169,22 @@ class LogEntry < Constellation::LogEntry
     #
     def get(uuid)
       new(@@data_store.get(:logs, uuid))
+    end
+
+    #
+    # Returns keys that are used for storing log entries in the given time range
+    #
+    def get_keys(start_date, end_date = nil)
+      keys = []
+      keys << "#{start_date.year}/#{start_date.month}/#{start_date.day}/#{start_date.hour}"
+      unless end_date.nil?
+        while start_date <= end_date
+          start_date += 60*60
+          keys << "#{start_date.year}/#{start_date.month}/#{start_date.day}/#{start_date.hour}" unless start_date > end_date
+        end
+        keys << "#{end_date.year}/#{end_date.month}/#{end_date.day}/#{end_date.hour}"
+      end
+      keys.uniq
     end
   end
 end
