@@ -64,27 +64,34 @@ describe LogEntry do
     context "given a compare query" do
       it "should query the given property's column family" do
         @data_store.should_receive(:get).with(:logs_by_application, @key, "ruby").and_return([])
-        LogEntry.where(:property => "application", :equals => "ruby")
+        LogEntry.where(:application => "ruby")
       end
 
       context "given one property value" do
         it "should return only log entries matching the given parameter" do
-          LogEntry.where(:property => "machine", :equals => "www42").each { |log_entry| log_entry.machine.should eql("www42") }
+          LogEntry.where(:machine => "www42").each { |log_entry| log_entry.machine.should eql("www42") }
         end
       end
+    end
 
-      context "given multiple property values" do
-        it "should return only log entries matching the given parameters" do
-          @data_store.should_receive(:get).with(:logs_by_application, @key, anything).exactly(3).times.and_return([])
-          LogEntry.where(:property => "application", :includes => ["ruby", "cassandra", "mail"])
-        end
+    context "given a compare query with multiple properties" do
+      before(:each) do
+        current_time = Time.now
+        @machine = "www42"
+        @application = "ruby"
+        @key = "#{current_time.year}/#{current_time.month}/#{current_time.day}/#{current_time.hour}_#{@machine}"
+      end
+
+      it "should query the correct column family" do
+        @data_store.should_receive(:get).with(:logs_by_machine_and_application, @key, @application).and_return([])
+        LogEntry.where(:application => @application, :machine => @machine)
       end
     end
 
     context "given a range query" do
       it "should return log entries matching the given range" do
         @data_store.should_receive(:get).with(:logs_by_application, @key, :start => "ruby", :finish => "php").and_return([])
-        LogEntry.where(:property => "application", :start => "ruby", :end => "php")
+        LogEntry.where(:application => ["ruby", "php"])
       end
     end
   end

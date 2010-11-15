@@ -14,7 +14,7 @@ describe View do
       end
 
       it "should query LogEntry using :equals" do
-        LogEntry.should_receive(:where).with(:property => @view.filter.property, :equals => @view.filter.equals)
+        LogEntry.should_receive(:where).with(:application => @view.filter.equals)
         @view.render
       end
 
@@ -29,7 +29,7 @@ describe View do
         end
 
         it "should send two Time objects" do
-          LogEntry.should_receive(:where).with(:start => Time.parse(@view.filter.equals), :property => @view.filter.property, :end => Time.parse(@view.filter.equals))
+          LogEntry.should_receive(:where).with(:date => [Time.parse(@view.filter.equals), Time.parse(@view.filter.equals)])
           @view.render
         end
       end
@@ -44,7 +44,7 @@ describe View do
       end
 
       it "should query LogEntry using :equals" do
-        LogEntry.should_receive(:where).with(:property => @view.filter.property, :start => @view.filter.start, :end => @view.filter.end)
+        LogEntry.should_receive(:where).with(:machine => [@view.filter.start, @view.filter.end])
         @view.render
       end
     end
@@ -60,7 +60,7 @@ describe View do
       end
 
       it "should send a Time object" do
-        LogEntry.should_receive(:where).with(:start => Time.parse(@view.filter.start), :end => Time.parse(@view.filter.end), :property => @view.filter.property)
+        LogEntry.should_receive(:where).with(:date => [Time.parse(@view.filter.start), Time.parse(@view.filter.end)])
         @view.render
       end
     end

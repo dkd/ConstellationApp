@@ -14,16 +14,16 @@ class View < ActiveRecord::Base
     case filter.query_type
     when "compare"
       if filter.property=="date"
-        LogEntry.where(:property => filter.property, :start => Time.parse(filter.equals), :end => Time.parse(filter.equals+'.999'))
+        LogEntry.where(:date => [Time.parse(filter.equals), Time.parse(filter.equals+'.999')])
       else
-        LogEntry.where(:property => filter.property, :equals => filter.equals)
+        LogEntry.where(filter.property.to_sym => filter.equals)
       end
     when "range"
       if filter.property=="date"
         filter.start  = filter.start  ? Time.parse(filter.start) : Time.now
         filter.end    = filter.end    ? Time.parse(filter.end+'.999') : Time.now
       end
-      LogEntry.where(:property => filter.property, :start => filter.start, :end => filter.end)
+      LogEntry.where(filter.property.to_sym => [filter.start, filter.end])
     end
   rescue NoMethodError
     LogEntry.all(:reversed => true)

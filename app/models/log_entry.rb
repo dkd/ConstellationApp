@@ -55,11 +55,11 @@ class LogEntry < Constellation::LogEntry
     def current_epoch(options={})
       results       = []
       current_time  = Time.now
-      @@data_store.get(:logs, "#{current_time.year}/#{current_time.month}/#{current_time.day}/#{current_time.hour}", options).each { |log_entry|
+      @@data_store.get(:logs, "#{current_time.year}/#{current_time.month}/#{current_time.day}/#{current_time.hour}", options).each do |log_entry|
         attributes         = log_entry[1]
         attributes["uuid"] = log_entry[0].to_guid
         results << new(attributes)
-      }
+      end
       results
     end
 
@@ -90,12 +90,12 @@ class LogEntry < Constellation::LogEntry
         return current_epoch(options)
       end
       options.delete(:order)
-      @@data_store.get(column_family, key, options).each { |log_entry|
+      @@data_store.get(column_family, key, options).each do |log_entry|
         uuid               = log_entry[1].keys.first.to_guid
         attributes         = @@data_store.get(:logs, key, uuid)
         attributes["uuid"] = uuid
         results << new(attributes)
-      }
+      end
       results
     end
 
@@ -105,51 +105,60 @@ class LogEntry < Constellation::LogEntry
     #
     # E.g. if you want to retrieve only log entries between Nov 1 2010 and Nov 10 2010, you can do this by:
     #
-    #   LogEntry.where(:property => "timestamp", :start => Time.parse("Nov 1 2010"), :end => Time.parse("Nov 10 2010"))
+    #   LogEntry.where(:date => [Time.parse("Nov 1 2010"), Time.parse("Nov 10 2010")])
     #
     def where(options={})
       results       = []
       current_time  = Time.now
       key           = "#{current_time.year}/#{current_time.month}/#{current_time.day}/#{current_time.hour}"
-      case options[:property]
-      when "application"
-        column_family = :logs_by_application
-      when "machine"
-        column_family = :logs_by_machine
-      else
-        column_family = :logs
+
+      # Multiple compares
+      if options[:machine].is_a?(String) && options[:application].is_a?(String)
+        key = key + "_" + options[:machine]
+        @@data_store.get(:logs_by_machine_and_application, key, options[:application]).each do |attribute_value|
+          attribute_value[1].keys.each do |uuid|
+            guid               = uuid.to_guid
+            attributes         = @@data_store.get(:logs, key, guid)
+            attributes["uuid"] = guid
+            results            << new(attributes)
+          end
+        end
+      # Compare
+      elsif options[:machine].is_a?(String)
+        @@data_store.get(:logs_by_machine, key, options[:machine]).each { |log_entry| results << parse_log_entry(log_entry) }
+      elsif options[:application].is_a?(String)
+        @@data_store.get(:logs_by_application, key, options[:application]).each { |log_entry| results << parse_log_entry(log_entry) }
+      # Range
+      elsif options[:machine].is_a?(Array)
+        results = range(:logs_by_machine, key, :start => options[:machine].first, :end => options[:machine].second)
+      elsif options[:application].is_a?(Array)
+        results = range(:logs_by_application, key, :start => options[:application].first, :end => options[:application].second)
+      elsif options[:date].is_a?(Array)
+        results = range(:logs, key, :start => options[:date].first, :end => options[:date].second)
       end
-      if options[:equals]
-        @@data_store.get(column_family, key, options[:equals]).each { |log_entry| results << parse_log_entry(log_entry) }
-      elsif options[:includes]
-        options[:includes].each { |value|
-          @@data_store.get(column_family, key, value).each { |log_entry| results << parse_log_entry(log_entry) }
-        }
-      elsif options[:start] && options[:end]
-        results = range(column_family, key, :start => options[:start], :end => options[:end])
-      end
+
       results
     end
 
     def range(column_family, key, options={})
       results = []
       if column_family==:logs
-        get_keys(options[:start], options[:end]).each { |key|
-          @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each { |log_entry|
+        get_keys(options[:start], options[:end]).each do |key|
+          @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each do |log_entry|
             attributes = log_entry[1]
             attributes["uuid"] = log_entry[0].to_guid
             results << new(attributes)
-          }
-        }
+          end
+        end
       else
-        @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each { |attribute_value|
-          attribute_value[1].keys.each { |uuid|
+        @@data_store.get(column_family, key, :start => options[:start], :finish => options[:end]).each do |attribute_value|
+          attribute_value[1].keys.each do |uuid|
             guid               = uuid.to_guid
             attributes         = @@data_store.get(:logs, key, guid)
             attributes["uuid"] = guid
             results            << new(attributes)
-          }
-        }
+          end
+        end
       end
       results
     end
