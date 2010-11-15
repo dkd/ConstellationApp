@@ -4,6 +4,7 @@ log/*.log
 
 # Temporary data
 tmp
+*.swp
 
 # Tests
 db/*.sqlite3
