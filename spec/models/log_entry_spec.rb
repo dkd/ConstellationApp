@@ -88,10 +88,17 @@ describe LogEntry do
       end
     end
 
-    context "given a range query" do
+    context "given a range query on applications" do
       it "should return log entries matching the given range" do
         @data_store.should_receive(:get).with(:logs_by_application, @key, :start => "ruby", :finish => "php").and_return([])
         LogEntry.where(:application => ["ruby", "php"])
+      end
+    end
+
+    context "given a range query on machines" do
+      it "should return log entries matching the given range" do
+        @data_store.should_receive(:get).with(:logs_by_machine, @key, :start => "www0", :finish => "www3").and_return([])
+        LogEntry.where(:machine => ["www0", "www3"])
       end
     end
   end
