@@ -160,6 +160,7 @@ GEM
     net-ssh-gateway (1.0.1)
       net-ssh (>= 1.99.1)
     nokogiri (1.4.3.1)
+    piglet (0.3.0)
     polyglot (0.3.1)
     progressbar (0.9.0)
     rack (1.2.1)
@@ -259,6 +260,7 @@ DEPENDENCIES
   mongrel
   mysql
   nokogiri
+  piglet
   rails (= 3.0.1)
   rspec
   rspec-rails

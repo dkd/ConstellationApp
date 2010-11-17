@@ -19,8 +19,7 @@ production:
   reconnect: false
   database: constellation_production
   pool: 5
-  username: root
-  password:
-  socket: /tmp/mysql.sock
+  username: constellation
+  password: cassandra
 cucumber:
   <<: *test

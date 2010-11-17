@@ -28,6 +28,7 @@ group :development, :test do
   gem 'hpricot'
   gem 'metric_fu'
   gem 'nokogiri'
+  gem 'piglet'
 end
 
 # Testing
