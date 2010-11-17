@@ -147,7 +147,7 @@ describe LogEntry do
 
     context "given a range of 3 hours" do
       it "should return 4 keys" do
-        LogEntry.get_keys(Time.now-60*60*3, Time.now).should have (4).items
+        LogEntry.get_keys(Time.now-60*60*3, Time.now).should have(4).items
       end
     end
 
