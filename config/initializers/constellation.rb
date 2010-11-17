@@ -1,5 +1,4 @@
 # Run this initializer only in development or production environment
-raise Constellation::ConstellationFileNotFoundError unless File.exists?("ConstellationFile")
 config = Constellation::Config.instance
 
 # parse ConstellationFile
