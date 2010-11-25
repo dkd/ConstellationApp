@@ -1,11 +1,7 @@
 source 'http://rubygems.org'
 
 # Rails
-gem 'rails', '3.0.1'
-
-gem 'mongrel'
-gem 'cgi_multipart_eof_fix'
-gem 'fastthread'
+gem 'rails'
 
 # Database
 gem 'mysql'

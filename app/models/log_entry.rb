@@ -185,11 +185,12 @@ class LogEntry < Constellation::LogEntry
     #
     def get_keys(start_date, end_date = nil)
       keys = []
-      keys << "#{start_date.year}/#{start_date.month}/#{start_date.day}/#{start_date.hour}"
+      start_key = "#{start_date.year}/#{start_date.month}/#{start_date.day}/#{start_date.hour}"
+      keys << start_key
       unless end_date.nil?
         while start_date <= end_date
           start_date += 60*60
-          keys << "#{start_date.year}/#{start_date.month}/#{start_date.day}/#{start_date.hour}" unless start_date > end_date
+          keys << start_key unless start_date > end_date
         end
         keys << "#{end_date.year}/#{end_date.month}/#{end_date.day}/#{end_date.hour}"
       end

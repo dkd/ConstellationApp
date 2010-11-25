@@ -19,7 +19,7 @@ production:
   reconnect: false
   database: constellation_production
   pool: 5
-  username: constellation
-  password: cassandra
+  username: constsql1
+  password: GnoOQ6ei4Z
 cucumber:
   <<: *test
