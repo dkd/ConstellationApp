@@ -167,4 +167,15 @@ describe LogEntry do
       LogEntry.get_keys(Time.now).should be_an(Array)
     end
   end
+
+  describe ".get_key_for" do
+    it "should return a String" do
+      LogEntry.get_key_for(Time.now).should be_a(String)
+    end
+
+    it "should return a key using the year/month/day/hour format" do
+      time = Time.now
+      LogEntry.get_key_for(time).should eql("#{time.year}/#{time.month}/#{time.day}/#{time.hour}")
+    end
+  end
 end
