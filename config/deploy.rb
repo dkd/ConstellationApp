@@ -29,16 +29,17 @@ namespace :deploy do
   end
 
   task :load_schema, :roles => :app do
-    run "cd #{current_path}; rake db:schema:load"
+    run "cd #{current_path}; RAILS_ENV=production rake db:create"
+    run "cd #{current_path}; RAILS_ENV=production rake db:schema:load"
   end
 
   %w(start stop restart).each do |action|
      desc "#{action} the Thin processes"
      task action.to_sym do
-       find_and_execute_task("thin:#{action}")
+       run "sudo /etc/init.d/thin #{action}"
     end
   end
 end
 
-after "deploy", "deploy:cleanup", "deploy:symlink", "deploy:restart_server"
+after "deploy", "deploy:cleanup", "deploy:symlink", "deploy:restart"
 
