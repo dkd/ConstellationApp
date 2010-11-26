@@ -36,7 +36,6 @@ group :test do
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-  gem 'ruby-debug' if RUBY_VERSION.include? "1.8"
 end
 
 # Testing

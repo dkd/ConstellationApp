@@ -1,4 +1,4 @@
-require "bundler/capistrano"
+#require "bundler/capistrano"
 
 ssh_options[:keys] = %w(/Users/stefan/.ssh/dkd_maintenance_dsa)
 # use local SSH keys
