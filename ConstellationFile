@@ -10,7 +10,7 @@ data_store.port     = 9160
 data_store.keyspace = :constellation
 
 # set up test environment
-if %w(production test).include? Rails
+if %w(production test).include? Rails.env
   data_store.host     = "vm-03.27.dkd.de"
   data_store.keyspace = :constellation_test
   data_store.username = "constrails"
