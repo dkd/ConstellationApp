@@ -24,7 +24,6 @@ group :development, :test do
   gem 'hpricot'
   gem 'metric_fu'
   gem 'nokogiri'
-  gem 'piglet'
 end
 
 # Testing
@@ -36,9 +35,5 @@ group :test do
   gem 'cucumber-rails'
   gem 'database_cleaner'
   gem 'factory_girl_rails'
-end
-
-# Testing
-group :test do
   gem 'sqlite3-ruby', :require => 'sqlite3'
 end
