@@ -1,6 +1,5 @@
 require "bundler/capistrano"
 
-ssh_options[:keys] = %w(/Users/stefan/.ssh/dkd_maintenance_dsa)
 # use local SSH keys
 ssh_options[:forward_agent] = true
 
@@ -8,9 +7,10 @@ set :application, "demo.constellationapp.org"
 set :user,        "dkd"
 
 set :scm,         :git
-set :deploy_via,  :checkout
-set :repository,  "ssh://root@git.dkd.de:5022/var/cache/git/constellation_app.git"
+set :deploy_via,  :copy
+set :repository,  "git@git.dkd.de:constellation-app.git"
 set :use_sudo,    false
+
 # helps keep mongrel pid files clean
 set :mongrel_clean, true
 
