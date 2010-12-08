@@ -31,6 +31,7 @@ namespace :deploy do
   task :load_schema, :roles => :app do
     run "cd #{current_path}; RAILS_ENV=production rake db:create"
     run "cd #{current_path}; RAILS_ENV=production rake db:schema:load"
+    run "cd #{current_path}; RAILS_ENV=production rake db:seed"
   end
 
   %w(start stop restart).each do |action|
