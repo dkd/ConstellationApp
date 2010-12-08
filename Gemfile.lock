@@ -66,7 +66,7 @@ GEM
       ruby_parser (~> 2.0.4)
       sexp_processor (~> 3.0.3)
     colored (1.2)
-    constellation (0.0.7)
+    constellation (0.0.8)
       activemodel
       cassandra
       json
