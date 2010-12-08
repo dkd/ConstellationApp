@@ -37,7 +37,7 @@ namespace :deploy do
   %w(start stop restart).each do |action|
      desc "#{action} the Thin processes"
      task action.to_sym do
-       run "sudo /etc/init.d/thin #{action}"
+       run "/etc/init.d/thin #{action}"
     end
   end
 end
