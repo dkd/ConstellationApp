@@ -29,14 +29,14 @@ Constellation.Views.template = Ext.extend(Ext.Panel, {
 							    	xtype     : 'datefield',
 							      name      : 'start',
 							      fieldLabel: 'Start',
-										format: 		'm/d/Y H:i:s',
+										format: 		'Y/m/d H:i:s',
 										value: 			this.filterStart,
 										width: 			150
 									}, {
 							      xtype     : 'datefield',
 							      name      : 'end',
 							      fieldLabel: 'End',
-										format: 		'm/d/Y H:i:s',
+										format: 		'Y/m/d H:i:s',
 										value: 			this.filterEnd,
 										width: 			150
 							    }]
@@ -46,7 +46,7 @@ Constellation.Views.template = Ext.extend(Ext.Panel, {
 							Ext.getCmp('add-filter-'+this.viewElement.id).add({
 								id: 				'equals-date-'+this.viewElement.id,
 								fieldLabel: 'Equals',
-								format: 		'm/d/Y H:i:s',
+								format: 		'Y/m/d H:i:s',
 								xtype: 			'datefield',
 								name: 			'equals',
 								value: 			this.filterEquals,

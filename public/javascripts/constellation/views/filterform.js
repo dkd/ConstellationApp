@@ -64,7 +64,7 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 								id: 				'equals-date-'+this.viewId,
 								fieldLabel: 'Equals',
 								xtype: 			'datefield',
-								format: 		'm/d/Y H:i:s',
+								format: 		'Y/m/d H:i:s',
 								name: 			'equals',
 								value: 			this.filterEquals,
 								width: 			150
@@ -81,13 +81,13 @@ Constellation.Views.FilterForm = Ext.extend(Ext.FormPanel, {
 							    	xtype: 			'datefield',
 							      name: 			'start',
 							      fieldLabel: 'Start',
-										format: 		'm/d/Y H:i:s',
+										format: 		'Y/m/d H:i:s',
 										width: 			150
 									}, {
 							      xtype: 			'datefield',
 							      name: 			'end',
 							      fieldLabel: 'End',
-										format: 		'm/d/Y H:i:s',
+										format: 		'Y/m/d H:i:s',
 										width: 			150
 							    }]
 							});

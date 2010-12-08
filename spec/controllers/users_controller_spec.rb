@@ -17,7 +17,7 @@ describe UsersController do
 
     it "should render only id and email attributes" do
       controller.stub!(:authenticate_user!)
-      User.should_receive(:select).with(:id, :email)
+      User.should_receive(:select).with([:id, :email])
       get :index, :format => :json
     end
 

@@ -10,6 +10,8 @@
 class LogEntry < Constellation::LogEntry
   @@data_store = Constellation::DataStore.instance
 
+  attr_accessor :timestamp
+
   #
   # Initializes and parses the given attributes.
   #
@@ -136,7 +138,6 @@ class LogEntry < Constellation::LogEntry
       elsif options[:date].is_a?(Array)
         results = range(:logs, key, :start => options[:date].first, :end => options[:date].second)
       end
-
       results
     end
 

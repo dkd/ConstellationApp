@@ -5,6 +5,6 @@ class UsersController < ApplicationController
   # GET /users.json
   #----------------------------------------------------------------------------
   def index
-    respond_with(User.select(:id, :email).find(:all))
+    respond_with(User.select([:id, :email]).find(:all))
   end
 end
