@@ -1,5 +1,4 @@
 # General
-.bundle
 log/*.log
 
 # Temporary data
@@ -12,3 +11,6 @@ db/*.sqlite3
 # Documentation
 .yardoc
 doc
+
+# ignore gems
+vendor/bundle/ruby
