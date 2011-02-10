@@ -3,7 +3,7 @@ require "bundler/capistrano"
 # use local SSH keys
 ssh_options[:forward_agent] = true
 
-set :application, "demo.constellationapp.org"
+set :application, "constellation"
 set :user,        "dkd"
 
 set :scm,         :git
@@ -11,15 +11,14 @@ set :deploy_via,  :copy
 set :repository,  "git@git.dkd.de:constellation-app.git"
 set :use_sudo,    false
 
-# helps keep mongrel pid files clean
-set :mongrel_clean, true
-
-set :deploy_to, "/var/www/demo.constellationapp.org"
+set :deploy_to,   "/var/www/demo.constellationapp.org"
 default_run_options[:pty] = true
 
-role :web, "vm-03.27.dkd.de", :port => 5022, :user => "dkd"
-role :app, "vm-03.27.dkd.de", :port => 5022, :user => "dkd"
-role :db,  "vm-03.27.dkd.de", :primary => true, :port => 5022, :user => "dkd"
+#role :web, "vm-03.27.dkd.de", :port => 5022, :user => "dkd"
+#role :app, "vm-03.27.dkd.de", :port => 5022, :user => "dkd"
+#role :db,  "vm-03.27.dkd.de", :primary => true, :port => 5022, :user => "dkd"
+
+server "vm-03.27.dkd.de", :app, :web, :db, :user => "dkd", :port => 5022
 
 namespace :deploy do
   task :cold do
@@ -37,7 +36,7 @@ namespace :deploy do
   %w(start stop restart).each do |action|
      desc "#{action} the Thin processes"
      task action.to_sym do
-       run "/etc/init.d/thin #{action}"
+       run "/etc/init.d/thin #{action} -C /etc/thin/#{application}.yml"
     end
   end
 end

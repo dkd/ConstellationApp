@@ -13,6 +13,4 @@ data_store.keyspace = :constellation
 if %w(production test).include? Rails.env
   data_store.host     = "vm-03.27.dkd.de"
   data_store.keyspace = :"constellation_#{Rails.env}"
-  data_store.username = "constrails"
-  data_store.password = "oxN0DWE5RQ"
 end
